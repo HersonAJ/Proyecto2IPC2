@@ -28,9 +28,9 @@ export class AuthService {
     const token = localStorage.getItem('jwtToken');
     if (token) {
       const decodedToken: any = jwtDecode(token);
-      console.log('Decoded token:', decodedToken); // Agrega este log
+      console.log('Decoded token:', decodedToken); // Agregue este log
       this.tipoUsuario = decodedToken.tipoUsuario || null;
-      console.log('Tipo de usuario:', this.tipoUsuario); // Agrega este log
+      console.log('Tipo de usuario:', this.tipoUsuario); // Agregue este log
       this.idUsuario = decodedToken.idUsuario || null;
       console.log('Id Usuario:', this.idUsuario );
     }

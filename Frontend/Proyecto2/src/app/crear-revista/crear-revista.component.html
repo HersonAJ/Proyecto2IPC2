@@ -1,0 +1,18 @@
+<div class="container my-4">
+    <h2 class="mt-4">Cargar Nueva Revista</h2>
+    <form [formGroup]="revistaForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título:</label>
+            <input type="text" formControlName="titulo" id="titulo" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción:</label>
+            <textarea formControlName="descripcion" id="descripcion" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría:</label>
+            <input type="text" formControlName="categoria" id="categoria" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Cargar</button>
+    </form>
+</div>

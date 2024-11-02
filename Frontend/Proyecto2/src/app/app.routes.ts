@@ -6,7 +6,7 @@ import { provideRouter, RouterModule } from '@angular/router'; //agregue esto pa
 import { importProvidersFrom } from '@angular/core';
 import { PerfilComponent } from './perfil/perfil.component';
 import { MisPublicacionesComponent } from './mis-publicaciones/mis-publicaciones.component';
-//import { CrearRevistaComponent } from './crear-revista/crear-revista.component';
+import { CrearRevistaComponent } from './crear-revista/crear-revista.component';
 //import { RevistaComponent } from './revista/revista.component';
 //import { CargarEdicionComponent } from './cargar-edicion/cargar-edicion.component';
 //import { VerArchivoComponent } from './ver-archivo/ver-archivo.component';
@@ -21,7 +21,7 @@ export const routes: Routes = [
   { path: '', component: HomepageComponent},
   { path: 'perfil', component: PerfilComponent},
   { path: 'misPublicaciones', component: MisPublicacionesComponent},
-  //{ path: 'crear-revista', component: CrearRevistaComponent},
+  { path: 'crear-revista', component: CrearRevistaComponent},
   //{ path: 'revista/:idRevista', component: RevistaComponent},
   //{ path: 'cargar-edicion/:idRevista', component: CargarEdicionComponent},
   //{ path: 'ver-archivo/:idRevista/:idEdicion', component: VerArchivoComponent},
