@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<body>
+    <div class="container my-4">
+        <div class="row">
+
+            <main class="col-md-9">
+                <section>
+                    <h2>Detalles de la Revista</h2>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h3 class="card-title">{{ revista.titulo }}</h3>
+                            <p class="card-text"><strong>Descripción:</strong> {{ revista.descripcion }}</p>
+                            <p class="card-text"><strong>Autor:</strong> {{ revista.autor }}</p>
+                            <p class="card-text"><strong>Categoría:</strong> {{ revista.categoria }}</p>
+                            <p class="card-text"><strong>Me Gusta:</strong> {{ revista.totalMeGusta }}</p>
+
+
+                            <iframe [src]="pdfSrc" width="100%" height="600px"></iframe>
+
+
+
+
+
+
+                            <a [href]="pdfSrc" class="btn btn-primary mt-3" download>Descargar PDF</a>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    <footer class="text-center py-4">
+        <p>© 2024 Revista Digital. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
