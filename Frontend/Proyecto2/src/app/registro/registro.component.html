@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<main class="container my-4">
+  <h2>Registro de Usuario</h2>
+  <form [formGroup]="registroForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="mb-3" [ngClass]="{'has-error': registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched}">
+      <label for="nombre" class="form-label">Nombre:</label>
+      <input type="text" class="form-control" id="nombre" formControlName="nombre" required>
+      <div *ngIf="registroForm.get('nombre')?.invalid && registroForm.get('nombre')?.touched" class="text-danger">
+        El nombre es obligatorio.
+      </div>
+    </div>
+    <div class="mb-3" [ngClass]="{'has-error': registroForm.get('email')?.invalid && registroForm.get('email')?.touched}">
+      <label for="email" class="form-label">Correo Electrónico:</label>
+      <input type="email" class="form-control" id="email" formControlName="email" required>
+      <div *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched" class="text-danger">
+        Introduzca un correo electrónico válido.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña:</label>
+      <input type="password" class="form-control" id="password" formControlName="password" required>
+      <div *ngIf="registroForm.get('contraseña')?.invalid && registroForm.get('contraseña')?.touched" class="text-danger">
+        La contraseña es obligatoria.
+      </div>
+    </div>
+    
+    <div class="mb-3">
+      <label for="fotoPerfil" class="form-label">Foto de Perfil:</label>
+      <input type="file" class="form-control" id="fotoPerfil" (change)="onFileChange($event)" accept=".jpg, .png">
+    </div>
+    <div class="mb-3" [ngClass]="{'has-error': registroForm.get('descripcion')?.invalid && registroForm.get('descripcion')?.touched}">
+      <label for="descripcion" class="form-label">Descripción:</label>
+      <textarea class="form-control" id="descripcion" formControlName="descripcion"></textarea>
+      <div *ngIf="registroForm.get('descripcion')?.invalid && registroForm.get('descripcion')?.touched" class="text-danger">
+        La descripción es obligatoria.
+      </div>
+    </div>
+    <div class="mb-3" [ngClass]="{'has-error': registroForm.get('hobbies')?.invalid && registroForm.get('hobbies')?.touched}">
+      <label for="hobbies" class="form-label">Hobbies:</label>
+      <select class="form-select" id="hobbies" formControlName="hobbies" multiple>
+        <option value="lectura">Lectura</option>
+        <option value="deportes">Deportes</option>
+        <option value="musica">Música</option>
+        <option value="viajes">Viajes</option>
+      </select>
+      <div *ngIf="registroForm.get('hobbies')?.invalid && registroForm.get('hobbies')?.touched" class="text-danger">
+        Seleccione al menos un hobby.
+      </div>
+    </div>
+    <div class="mb-3" [ngClass]="{'has-error': registroForm.get('temasInteres')?.invalid && registroForm.get('temasInteres')?.touched}">
+      <label for="temasInteres" class="form-label">Temas de Interés:</label>
+      <select class="form-select" id="temasInteres" formControlName="temasInteres" multiple>
+        <option value="tecnologia">Tecnología</option>
+        <option value="ciencia">Ciencia</option>
+        <option value="arte">Arte</option>
+        <option value="historia">Historia</option>
+      </select>
+      <div *ngIf="registroForm.get('temasInteres')?.invalid && registroForm.get('temasInteres')?.touched" class="text-danger">
+        Seleccione al menos un tema de interés.
+      </div>
+    </div>
+    <div class="mb-3" [ngClass]="{'has-error': registroForm.get('tipoUsuario')?.invalid && registroForm.get('tipoUsuario')?.touched}">
+      <label for="tipoUsuario" class="form-label">Tipo de Usuario:</label>
+      <select class="form-select" id="tipoUsuario" formControlName="tipoUsuario" (change)="mostrarSaldoCartera()">
+        <option value="Editor">Editor</option>
+        <option value="Suscriptor">Suscriptor</option>
+        <option value="Administrador">Administrador</option>
+        <option value="Comprador_Anuncios">Comprador de Anuncios</option>
+      </select>
+      <div *ngIf="registroForm.get('tipoUsuario')?.invalid && registroForm.get('tipoUsuario')?.touched" class="text-danger">
+        Seleccione un tipo de usuario.
+      </div>
+    </div>
+    <div *ngIf="mostrarSaldoCartera()" class="mb-3" [ngClass]="{'has-error': registroForm.get('saldoCartera')?.invalid && registroForm.get('saldoCartera')?.touched}">
+      <label for="saldoCartera" class="form-label">Saldo en Cartera:</label>
+      <input type="number" class="form-control" id="saldoCartera" formControlName="saldoCartera" step="0.01">
+      <div *ngIf="registroForm.get('saldoCartera')?.invalid && registroForm.get('saldoCartera')?.touched" class="text-danger">
+        El saldo en cartera es obligatorio para Compradores de Anuncios.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar</button>
+  </form>
+</main>
