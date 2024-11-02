@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../Services/auth.service';
-//import { LogoutService } from '../services/logout.service';
+import { LogoutService } from '../Services/logout.service';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
@@ -29,7 +29,7 @@ if(autenticado) {
 }
 
       //this.tipoUsuario = this.authService.getTipoUsuario();
-      console.log('Tipo de usuario en HeaderComponent:', this.tipoUsuario); // Agrega este log
+      console.log('Tipo de usuario en HeaderComponent:', this.tipoUsuario); 
       this.cdr.detectChanges();
     });
   }
