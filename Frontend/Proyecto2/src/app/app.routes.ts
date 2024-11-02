@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
-//import { HomepageComponent } from './homepage/homepage.component';
+import { HomepageComponent } from './homepage/homepage.component';
 import { provideRouter, RouterModule } from '@angular/router'; //agregue esto para tratar de hacer la referencia al registro
 import { importProvidersFrom } from '@angular/core';
 import { PerfilComponent } from './perfil/perfil.component';
@@ -18,7 +18,7 @@ export const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
   { path: 'registro', component: RegistroComponent},
-  //{ path: '', component: HomepageComponent},
+  { path: '', component: HomepageComponent},
   { path: 'perfil', component: PerfilComponent},
   //{ path: 'misPublicaciones', component: MisPublicacionesComponent},
   //{ path: 'crear-revista', component: CrearRevistaComponent},
