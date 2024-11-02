@@ -1,0 +1,34 @@
+<div class="container my-4">
+    <h2>Mis Publicaciones</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-group">
+          <li *ngFor="let publicacion of publicaciones" class="list-group-item">
+            <h5 class="mb-1">{{ publicacion.titulo }}</h5>
+            <p class="mb-1">{{ publicacion.descripcion }}</p>
+            <small><strong>Categoría:</strong> {{ publicacion.categoria }}</small><br>
+            <small><strong>Fecha de Creación:</strong> {{ publicacion.fechaCreacion }}</small><br>
+            <small><strong>Permite Comentarios:</strong> {{ publicacion.permiteComentarios ? "Sí" : "No" }}</small><br>
+            <small><strong>Permite Me Gusta:</strong> {{ publicacion.permiteMegusta ? "Sí" : "No" }}</small><br>
+            <form (ngSubmit)="actualizarEstado(publicacion.idRevista)">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="publicacion.permiteComentarios" name="permiteComentarios">
+                <label class="form-check-label">Permitir Comentarios</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="publicacion.permiteMegusta" name="permiteMegusta">
+                <label class="form-check-label">Permitir Me Gusta</label>
+              </div>
+              <button type="submit" class="btn btn-primary mt-2">Actualizar</button>
+            </form>
+            <button type="button" class="btn btn-primary mt-2" (click)="ingresarRevista(publicacion.idRevista)">Ingresar</button>
+            <button type="button" class="btn btn-danger mt-2" (click)="eliminarRevista(publicacion.idRevista)">Eliminar Revista</button> <!-- Botón de Eliminar Revista -->
+          </li>
+        </ul>
+      </div>
+    </div>
+    <button routerLink="crear-revista" type="button" class="btn btn-success" (click)="agregarNuevaRevista()">Agregar Nueva Revista</button>
+  </div>
+  <footer class="text-center py-4">
+    <p>© 2024 Revista Digital. Todos los derechos reservados.</p>
+  </footer>

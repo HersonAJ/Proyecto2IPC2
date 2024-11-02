@@ -43,7 +43,7 @@ export class PerfilComponent implements OnInit {
         this.hobbies = perfil.hobbies;
         this.temasInteres = perfil.temasInteres;
         this.tipoUsuario = perfil.tipoUsuario;
-        this.fotoPerfilBase64 = `data:image/jpeg;base64,${perfil.fotoPerfil}`; // Aquí decodificas la imagen
+        this.fotoPerfilBase64 = `data:image/jpeg;base64,${perfil.fotoPerfil}`; // Aquí se decodifica la imagen
       },
       error: (error) => {
         this.errorMessage = 'Error al cargar el perfil. Por favor, inténtalo de nuevo.';
