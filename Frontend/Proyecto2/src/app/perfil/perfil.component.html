@@ -1,0 +1,38 @@
+<div class="container my-4">
+    <h2>Información del Perfil</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="!errorMessage" class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body text-center">
+            <img *ngIf="fotoPerfilBase64; else defaultImg"
+                 [src]="fotoPerfilBase64"
+                 alt="Foto de Perfil" class="img-fluid rounded-circle mb-3"
+                 style="width: 150px; height: 150px; object-fit: cover;">
+            <ng-template #defaultImg>
+              <img src="img/default-profile.png" alt="Foto de Perfil" class="img-fluid rounded-circle mb-3">
+            </ng-template>
+            <h5 class="card-title">{{ nombre }}</h5>
+            <p class="card-text">{{ email }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <p><strong>Descripción:</strong> {{ descripcion }}</p>
+            <p><strong>Hobbies:</strong> {{ hobbies }}</p>
+            <p><strong>Temas de Interés:</strong> {{ temasInteres }}</p>
+            <p><strong>Tipo de Usuario:</strong> {{ tipoUsuario }}</p>
+          </div>
+        </div>
+        <div class="mt-3">
+          <a routerLink="/editar-perfil" class="btn btn-primary">Editar Perfil</a>
+          <a routerLink="/cambiar-contraseña" class="btn btn-secondary">Cambiar Contraseña</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
