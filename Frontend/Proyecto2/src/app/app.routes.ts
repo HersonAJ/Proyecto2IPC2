@@ -7,7 +7,7 @@ import { importProvidersFrom } from '@angular/core';
 import { PerfilComponent } from './perfil/perfil.component';
 import { MisPublicacionesComponent } from './mis-publicaciones/mis-publicaciones.component';
 import { CrearRevistaComponent } from './crear-revista/crear-revista.component';
-//import { RevistaComponent } from './revista/revista.component';
+import { RevistaComponent } from './revista/revista.component';
 //import { CargarEdicionComponent } from './cargar-edicion/cargar-edicion.component';
 //import { VerArchivoComponent } from './ver-archivo/ver-archivo.component';
 //import { RecargarCarteraComponent } from './recargar-cartera/recargar-cartera.component';
@@ -22,7 +22,7 @@ export const routes: Routes = [
   { path: 'perfil', component: PerfilComponent},
   { path: 'misPublicaciones', component: MisPublicacionesComponent},
   { path: 'crear-revista', component: CrearRevistaComponent},
-  //{ path: 'revista/:idRevista', component: RevistaComponent},
+  { path: 'revista/:idRevista', component: RevistaComponent},
   //{ path: 'cargar-edicion/:idRevista', component: CargarEdicionComponent},
   //{ path: 'ver-archivo/:idRevista/:idEdicion', component: VerArchivoComponent},
   //{ path: 'recargar-cartera', component: RecargarCarteraComponent}

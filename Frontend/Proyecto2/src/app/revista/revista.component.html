@@ -1,0 +1,29 @@
+<div class="container my-4">
+    <h2>Información de la Revista</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">{{ revista.titulo }}</h5>
+        <p class="card-text">{{ revista.descripcion }}</p>
+        <p><strong>Categoría:</strong> {{ revista.categoria }}</p>
+        <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion }}</p>
+      </div>
+    </div>
+  
+    <h3>Ediciones</h3>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ul class="list-group">
+          <li *ngFor="let edicion of ediciones" class="list-group-item">
+            <h5 class="mb-1">{{ edicion.tituloEdicion }}</h5>
+            <p class="mb-1">{{ edicion.descripcion }}</p>
+            <small><strong>Fecha de Publicación:</strong> {{ edicion.fechaCreacion | date: 'shortDate'}}</small><br>
+            <small><strong>Permite Comentarios:</strong> {{ edicion.permiteComentarios ? 'Sí' : 'No' }}</small><br>
+            <small><strong>Permite Me Gusta:</strong> {{ edicion.permiteMegusta ? 'Sí' : 'No' }}</small><br>
+            <a (click)="verPdf(edicion.idEdicion)" class="btn btn-primary mt-2">Ver PDF</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <button type="submit" class="btn btn-success" (click)="navegarACargarEdicion()">Agregar Edicion</button>
+  </div>
