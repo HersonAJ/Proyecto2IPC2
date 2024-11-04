@@ -1,18 +1,44 @@
 <div class="container my-4">
     <h2 class="mt-4">Cargar Nueva Revista</h2>
     <form [formGroup]="revistaForm" (ngSubmit)="onSubmit()">
-        <div class="mb-3">
-            <label for="titulo" class="form-label">Título:</label>
-            <input type="text" formControlName="titulo" id="titulo" class="form-control" required>
-        </div>
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripción:</label>
-            <textarea formControlName="descripcion" id="descripcion" class="form-control" required></textarea>
-        </div>
-        <div class="mb-3">
-            <label for="categoria" class="form-label">Categoría:</label>
-            <input type="text" formControlName="categoria" id="categoria" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3">Cargar</button>
+      <div class="mb-3">
+        <label for="titulo" class="form-label">Título:</label>
+        <input type="text" formControlName="titulo" id="titulo" class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción:</label>
+        <textarea formControlName="descripcion" id="descripcion" class="form-control" required></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="categoria" class="form-label">Categoría:</label>
+        <input type="text" formControlName="categoria" id="categoria" class="form-control" required>
+      </div>
+      
+      
+      <div class="mb-3">
+        <label for="fechaCreacion" class="form-label">Fecha de Creación:</label>
+        <input type="date" formControlName="fechaCreacion" id="fechaCreacion" class="form-control" required>
+      </div>
+      
+
+
+
+      <div class="mb-3">
+        <label for="tags" class="form-label">Tags:</label>
+        <input type="text" formControlName="tags" id="tags" class="form-control" placeholder="Ingrese los tags separados por comas" required>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" formControlName="permiteComentarios" id="permiteComentarios">
+        <label class="form-check-label" for="permiteComentarios">Permitir Comentarios</label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" formControlName="permiteMegusta" id="permiteMegusta">
+        <label class="form-check-label" for="permiteMegusta">Permitir Me Gusta</label>
+      </div>
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" formControlName="permiteSuscripcion" id="permiteSuscripcion">
+        <label class="form-check-label" for="permiteSuscripcion">Permitir Suscripciones</label>
+      </div>
+      <button type="submit" class="btn btn-primary mt-3">Cargar</button>
     </form>
-</div>
+  </div>

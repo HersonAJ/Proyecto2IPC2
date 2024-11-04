@@ -15,6 +15,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
@@ -32,6 +33,7 @@ public class RevistaController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response crearRevista(Revista revista) {
+        System.out.println("Llamada a crearRevista con revista: " + revista.getTitulo());
         RevistaDB revistaDB = new RevistaDB();
         
         boolean isInserted = revistaDB.insertRevista(revista);
@@ -47,6 +49,7 @@ public class RevistaController {
     @Path("/{idUsuario}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRevistaPorUsuario(@PathParam("idUsuario") int idUsuario) {
+        System.out.println("Llamada a getRevistaPorUsuario con idUsuario: " + idUsuario);
         RevistaDB revistaDB = new RevistaDB();
         List<Revista> revistas = revistaDB.getRevistasPorUsuario(idUsuario);
         if(revistas != null) {
@@ -56,50 +59,84 @@ public class RevistaController {
         }
     }
 
-
     @GET
     @Path("{idRevista}/ediciones")
     @Produces(MediaType.APPLICATION_JSON)
     public Response obtenerEdicionesPorRevista(@PathParam("idRevista") int idRevista) {
+        System.out.println("Llamada a obtenerEdicionesPorRevista con idRevista: " + idRevista);
         List<Edicion> ediciones = edicionDB.obtenerEdicionesPorRevista(idRevista);
         return Response.ok(ediciones).build();
     }
-    
-    
-    
-    //metodos para cambiar el estado de las revistas
+    //cambia el estado de la revista
     @PUT
     @Path("/{idRevista}/estado")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cambiarEstadoRevista(@PathParam("idRevista") int idRevista, CambiarEstadoRequest request) {
+    public Response eliminarRevista(@PathParam("idRevista") int idRevista) {
+        System.out.println("Llamada a eliminarRevista con idRevista: " + idRevista);
         RevistaDB revistaDB = new RevistaDB();
 
-        boolean isUpdated = revistaDB.cambiarEstadoRevista(idRevista, request.getEstado());
+        boolean isUpdated = revistaDB.eliminarRevista(idRevista, "Inactivo");
+        System.out.println("Resultado de eliminarRevista: " + isUpdated);
 
         if (isUpdated) {
-            return Response.status(Response.Status.OK).entity("{\"message\":\"Estado de la revista actualizado exitosamente.\"}").build();
+            return Response.status(Response.Status.OK).entity("{\"message\":\"Revista eliminada exitosamente.\"}").build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al actualizar el estado de la revista.\"}").build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al eliminar la revista.\"}").build();
+        }
+    }
+
+
+    @PUT
+    @Path("/{idRevista}/comentarios")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarPermiteComentarios(@PathParam("idRevista") int idRevista, @QueryParam("permiteComentarios") boolean permiteComentarios) {
+        System.out.println("Llamada a actualizarPermiteComentarios con idRevista: " + idRevista + " y permiteComentarios: " + permiteComentarios);
+        RevistaDB revistaDB = new RevistaDB();
+        
+        boolean isUpdated = revistaDB.actualizarPermiteComentarios(idRevista, permiteComentarios);
+        
+        if (isUpdated) {
+            return Response.status(Response.Status.OK).entity("{\"message\":\"Permite Comentarios actualizado exitosamente.\"}").build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al actualizar Permite Comentarios.\"}").build();
         }
     }
 
     @PUT
-    @Path("/ediciones/{idEdicion}/estado")
+    @Path("/{idRevista}/megusta")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cambiarEstadoEdicion(@PathParam("idEdicion") int idEdicion, CambiarEstadoRequest request) {
-        boolean isUpdated = edicionDB.cambiarEstadoEdicion(idEdicion, request.getEstado());
-
+    public Response actualizarPermiteMeGusta(@PathParam("idRevista") int idRevista, @QueryParam("permiteMeGusta") boolean permiteMeGusta) {
+        System.out.println("Llamada a actualizarPermiteMeGusta con idRevista: " + idRevista + " y permiteMeGusta: " + permiteMeGusta);
+        RevistaDB revistaDB = new RevistaDB();
+        
+        boolean isUpdated = revistaDB.actualizarPermiteMeGusta(idRevista, permiteMeGusta);
+        
         if (isUpdated) {
-            return Response.status(Response.Status.OK).entity("{\"message\":\"Estado de la edición actualizado exitosamente.\"}").build();
+            return Response.status(Response.Status.OK).entity("{\"message\":\"Permite Me Gusta actualizado exitosamente.\"}").build();
         } else {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al actualizar el estado de la edición.\"}").build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al actualizar Permite Me Gusta.\"}").build();
         }
     }
 
+    @PUT
+    @Path("/{idRevista}/suscripcion")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarPermiteSuscripcion(@PathParam("idRevista") int idRevista, @QueryParam("permiteSuscripcion") boolean permiteSuscripcion) {
+        System.out.println("Llamada a actualizarPermiteSuscripcion con idRevista: " + idRevista + " y permiteSuscripcion: " + permiteSuscripcion);
+        RevistaDB revistaDB = new RevistaDB();
+
+        boolean isUpdated = revistaDB.actualizarPermiteSuscripcion(idRevista, permiteSuscripcion);
+
+        if (isUpdated) {
+            return Response.status(Response.Status.OK).entity("{\"message\":\"Permite Suscripción actualizado exitosamente.\"}").build();
+        } else {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al actualizar Permite Suscripción.\"}").build();
+        }
+    }
+
+
 }
-
-    
-    
-

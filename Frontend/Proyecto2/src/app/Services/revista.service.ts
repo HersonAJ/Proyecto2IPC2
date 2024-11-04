@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RestConstants } from '../rest-constants';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,28 +20,41 @@ export class RevistaService {
     return this.http.post(this.baseUrl, revista, { headers });
   }
 
-  //metodo para enviar el token en el header
   private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('jwtToken');
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`).set('Content-Type', 'application/json');
   }
+  
 
-  //metodo para obtener las revistas por usuario
   getRevistasPorUsuario(idUsuario: number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.baseUrl}/${idUsuario}`, { headers });
   }
 
-  //metodo para obtener una revista
   getRevista(idRevista: number): Observable<any> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.baseUrl}/${idRevista}`, { headers });
   }
 
-  //metodo para cambiar el estado de una revista
-  cambiarEstadoRevista(idRevista: number, estado: string): Observable<any> {
+  actualizarPermiteComentarios(idRevista: number, permiteComentarios: boolean): Observable<any> {
     const headers = this.getAuthHeaders();
-    const body = { estado };
-    return this.http.put(`${this.baseUrl}/${idRevista}/estado`, body, { headers });
+    return this.http.put(`${this.baseUrl}/${idRevista}/comentarios?permiteComentarios=${permiteComentarios}`, null, { headers });
+  }
+
+  actualizarPermiteMeGusta(idRevista: number, permiteMeGusta: boolean): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.put(`${this.baseUrl}/${idRevista}/megusta?permiteMeGusta=${permiteMeGusta}`, null, { headers });
+  }
+
+  actualizarPermiteSuscripcion(idRevista: number, permiteSuscripcion: boolean): Observable<any> {
+    const headers = this.getAuthHeaders();
+    return this.http.put(`${this.baseUrl}/${idRevista}/suscripcion?permiteSuscripcion=${permiteSuscripcion}`, null, { headers });
+  }
+
+  //metodo de prueba
+
+  cambiarEstadoRevistaPrueba(idRevista: number): Observable<any> {
+    const url = `${this.baseUrl}/${idRevista}/estado`;
+    return this.http.put(url, null);
   }
 }
