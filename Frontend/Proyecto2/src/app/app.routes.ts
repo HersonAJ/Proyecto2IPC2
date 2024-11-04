@@ -11,6 +11,11 @@ import { RevistaComponent } from './revista/revista.component';
 import { CargarEdicionComponent } from './cargar-edicion/cargar-edicion.component';
 import { VerArchivoComponent } from './ver-archivo/ver-archivo.component';
 import { RecargarCarteraComponent } from './recargar-cartera-editor/recargar-cartera-editor.component';
+import { CarteraGlobalComponent } from './cartera-global/cartera-global.component';
+//faltantes
+//import { EliminarRevistaComponent } from './eliminar-revista/eliminar-revista.component';
+//import { RevistasSuscriptorComponent } from './revistas-suscriptor/revistas-suscriptor.component';
+
 
 
 
@@ -25,7 +30,10 @@ export const routes: Routes = [
   { path: 'revista/:idRevista', component: RevistaComponent},
   { path: 'cargar-edicion/:idRevista', component: CargarEdicionComponent},
   { path: 'ver-archivo/:idRevista/:idEdicion', component: VerArchivoComponent},
-  { path: 'recargar-cartera', component: RecargarCarteraComponent}
+  { path: 'recargar-cartera', component: RecargarCarteraComponent},
+  { path: 'recargar-cartera-global', component: CarteraGlobalComponent},
+  //{ path: 'eliminar-revista', component: EliminarRevistaComponent},
+  //{ path: 'revistas', component: RevistasSuscriptorComponent}
 ];
 
 //agregue esto para tratar de hacer la referencia al registro
