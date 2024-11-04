@@ -10,6 +10,7 @@ package Backend.DB;
  */
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SaldoCarteraDB {
@@ -33,6 +34,24 @@ public class SaldoCarteraDB {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+        public double obtenerSaldo(int idUsuario) {
+        String query = "SELECT saldo_cartera FROM Usuario WHERE id_usuario = ?";
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, idUsuario);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                return rs.getDouble("saldo_cartera");
+            } else {
+                throw new SQLException("No se encontró el usuario con id " + idUsuario);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener el saldo.");
         }
     }
 }

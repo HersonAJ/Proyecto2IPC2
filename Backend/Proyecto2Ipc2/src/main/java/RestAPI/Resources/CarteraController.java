@@ -6,8 +6,10 @@ package RestAPI.Resources;
 
 import Backend.DB.SaldoCarteraDB;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -36,6 +38,18 @@ public class CarteraController {
             }
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity("{\"message\":\"" + e.getMessage() + "\"}").build();
+        }
+    }
+
+    @GET
+    @Path("/saldo/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerSaldo(@PathParam("idUsuario") int idUsuario) {
+        try {
+            double saldo = saldoCarteraDB.obtenerSaldo(idUsuario);
+            return Response.status(Response.Status.OK).entity("{\"saldo\":" + saldo + "}").build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al obtener el saldo.\"}").build();
         }
     }
 }

@@ -1,26 +1,33 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="text-center">Recargar Cartera</h3>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="text-center">Cartera</h3>
+        </div>
+        <div class="card-body">
+          <!-- Mostrar el total de la cartera -->
+          <div class="form-group mb-4">
+            <h5 class="card-title">Total de la Cartera</h5>
+            <p class="card-text">{{ totalCartera | currency }}</p>
           </div>
-          <div class="card-body">
-            <form (ngSubmit)="onSubmit()" #recargarForm="ngForm">
-              <div class="form-group">
-                <label for="monto">Monto a recargar</label>
-                <input type="number" id="monto" class="form-control" name="monto" [(ngModel)]="monto" placeholder="Ingrese el monto a recargar" required min="0.01" pattern="^[0-9]+(\.[0-9]{1,2})?$">
-                <div *ngIf="recargarForm.submitted && !recargarForm.controls['monto'].valid" class="invalid-feedback d-block">
-                  
-                </div>
+
+          <!-- Sección para recargar saldo -->
+          <form (ngSubmit)="onSubmit()" #recargarForm="ngForm">
+            <div class="form-group">
+              <label for="monto">Monto a recargar</label>
+              <input type="number" id="monto" class="form-control" name="monto" [(ngModel)]="monto" placeholder="Ingrese el monto a recargar" required min="0.01" pattern="^[0-9]+(\.[0-9]{1,2})?$">
+              <div *ngIf="recargarForm.submitted && !recargarForm.controls['monto'].valid" class="invalid-feedback d-block">
+                <!--Ingrese un monto válido.-->
               </div>
-              <button type="submit" class="btn btn-primary btn-block" [disabled]="!recargarForm.valid">Recargar</button>
-            </form>
-            <div *ngIf="mensaje" class="alert alert-info mt-3" role="alert">
-              {{ mensaje }}
             </div>
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!recargarForm.valid">Recargar</button>
+          </form>
+          <div *ngIf="mensaje" class="alert alert-info mt-3" role="alert">
+            {{ mensaje }}
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
