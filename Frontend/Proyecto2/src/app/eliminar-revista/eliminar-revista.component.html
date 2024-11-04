@@ -1,0 +1,29 @@
+<div class="container">
+    <h1>Eliminar Revistas</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Id Revista</th>
+          <th>Título</th>
+          <th>Descripción</th>
+          <th>Categoría</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let revista of revistas">
+          <td>{{ revista.idRevista }}</td>
+          <td>{{ revista.titulo }}</td>
+          <td>{{ revista.descripcion }}</td>
+          <td>{{ revista.categoria }}</td>
+          <td>{{ revista.estado }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="eliminarRevista(revista.idRevista)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
