@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RevistaService } from '../Services/revista.service';
 import { AuthService } from '../Services/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
 
 interface Publicacion {
   idRevista: number;
@@ -14,17 +17,19 @@ interface Publicacion {
   fechaCreacion: string;
   permiteComentarios: boolean;
   permiteMegusta: boolean;
+  permiteSuscripcion: boolean;
 }
 
 @Component({
   selector: 'app-mis-publicaciones',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
   templateUrl: './mis-publicaciones.component.html',
   styleUrls: ['./mis-publicaciones.component.css']
 })
-export class MisPublicacionesComponent implements OnInit {
+export class MisPublicacionesComponent implements OnInit, OnDestroy {
   publicaciones: Publicacion[] = [];
+  subscription: Subscription | null = null;
 
   constructor(
     private revistaService: RevistaService,
@@ -35,36 +40,50 @@ export class MisPublicacionesComponent implements OnInit {
   ngOnInit(): void {
     const idUsuario = this.authService.getIdUsuario();
     if (idUsuario !== null) {
-      this.revistaService.getRevistasPorUsuario(idUsuario).subscribe(
-        (revistas: Publicacion[]) => {
-          this.publicaciones = revistas;
-        },
-        error => {
-          console.error('Error al obtener las publicaciones', error);
-        }
-      );
+      this.revistaService.getRevistasPorUsuario(idUsuario).subscribe((revistas: Publicacion[]) => {
+        this.publicaciones = revistas;
+      }, error => {
+        console.error('Error al obtener las publicaciones', error);
+      });
     } else {
       console.error('Error: No se pudo obtener el idUsuario');
     }
   }
 
-  actualizarEstado(idRevista: number): void {
-    console.log(`Actualizando estado de la revista con id ${idRevista}`);
+  togglePermiteComentarios(idRevista: number, currentState: boolean): void {
+    const newState = !currentState;
+    this.revistaService.actualizarPermiteComentarios(idRevista, newState).subscribe(() => {
+      const publicacion = this.publicaciones.find(pub => pub.idRevista === idRevista);
+      if (publicacion) {
+        publicacion.permiteComentarios = newState;
+      }
+      console.log('Permite Comentarios actualizado exitosamente');
+    }, error => console.error('Error al actualizar Permite Comentarios', error));
   }
 
-  eliminarRevista(idRevista: number): void {
-    const confirmed = window.confirm('¿Está seguro de que desea eliminar esta revista?');
-    if (confirmed) {
-      this.revistaService.cambiarEstadoRevista(idRevista, 'Inactivo').subscribe(() => {
-        alert('Revista eliminada exitosamente');
-        this.publicaciones = this.publicaciones.filter(pub => pub.idRevista !== idRevista);
-      }, error => {
-        alert('Error al eliminar la revista');
-        console.error('Error al eliminar la revista:', error);
-      });
-    }
+  togglePermiteMeGusta(idRevista: number, currentState: boolean): void {
+    const newState = !currentState;
+    this.revistaService.actualizarPermiteMeGusta(idRevista, newState).subscribe(() => {
+      const publicacion = this.publicaciones.find(pub => pub.idRevista === idRevista);
+      if (publicacion) {
+        publicacion.permiteMegusta = newState;
+      }
+      console.log('Permite Me Gusta actualizado exitosamente');
+    }, error => console.error('Error al actualizar Permite Me Gusta', error));
   }
 
+  togglePermiteSuscripcion(idRevista: number, currentState: boolean): void {
+    const newState = !currentState;
+    this.revistaService.actualizarPermiteSuscripcion(idRevista, newState).subscribe(() => {
+      const publicacion = this.publicaciones.find(pub => pub.idRevista === idRevista);
+      if (publicacion) {
+        publicacion.permiteSuscripcion = newState;
+      }
+      console.log('Permite Suscripciones actualizado exitosamente');
+    }, error => console.error('Error al actualizar Permite Suscripciones', error));
+  }
+
+  
   agregarNuevaRevista(): void {
     this.router.navigate(['crear-revista']);
   }
@@ -72,4 +91,15 @@ export class MisPublicacionesComponent implements OnInit {
   ingresarRevista(idRevista: number): void {
     this.router.navigate(['revista', idRevista]);
   }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  eliminarRevistas(): void {
+    this.router.navigate(['eliminar-revista']);
+  }
+  
 }
