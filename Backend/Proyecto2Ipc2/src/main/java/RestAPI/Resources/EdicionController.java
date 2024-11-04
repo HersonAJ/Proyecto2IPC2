@@ -47,14 +47,13 @@ public class EdicionController {
    @Produces(MediaType.APPLICATION_JSON)
    public Response insertarEdicion(@FormDataParam("idRevista") int idRevista,
                                    @FormDataParam("tituloEdicion") String tituloEdicion,
-                                   @FormDataParam("fechaCreacion") Date fechaCreacion,
-                                   @FormDataParam("archivoPdf") InputStream uploadedInputStream,
-                                   @FormDataParam("permiteComentarios") boolean permiteComentarios,
-                                   @FormDataParam("permiteMegusta") boolean permiteMegusta) {
+                                   @FormDataParam("fechaCreacion") java.sql.Date fechaCreacion,
+                                   @FormDataParam("archivoPdf") InputStream uploadedInputStream
+   ) {
 
        try {
            byte[] archivoPdf = FileUtils.inputStreamToByteArray(uploadedInputStream);
-           Edicion edicion = new Edicion(0, idRevista, tituloEdicion, fechaCreacion, "Activo", permiteComentarios, permiteMegusta, archivoPdf); // Estado fijado a 'Activo'
+           Edicion edicion = new Edicion(0, idRevista, tituloEdicion, fechaCreacion, "Activo", archivoPdf); // Estado fijado a 'Activo'
            boolean isInserted = edicionDB.insertarEdicion(edicion);
 
            if (isInserted) {
@@ -71,10 +70,7 @@ public class EdicionController {
            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error al procesar la imagen").build();
        }
    }
-
-
-
-
+  
 //agregue este metodo para tratar de enviar el pdf correctamente
     @GET
     @Path("pdf/{idEdicion}")
@@ -94,3 +90,4 @@ public class EdicionController {
         }
     }
 }
+

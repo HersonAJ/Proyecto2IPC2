@@ -1,30 +1,22 @@
 <div class="container my-4">
-    <h2>Cargar Nueva Edición</h2>
-    <div class="card mb-4">
-      <div class="card-body">
-        <form #edicionForm="ngForm" (ngSubmit)="cargarEdicion(edicionForm)">
-          <div class="mb-3">
-            <label for="tituloEdicion" class="form-label">Título de la Edición</label>
-            <input type="text" class="form-control" id="tituloEdicion" [(ngModel)]="nuevaEdicion.tituloEdicion" name="tituloEdicion" required>
-          </div>
-          <div class="mb-3">
-            <label for="fechaCreacion" class="form-label">Fecha de Creación</label>
-            <input type="date" class="form-control" id="fechaCreacion" [(ngModel)]="nuevaEdicion.fechaCreacion" name="fechaCreacion" required>
-          </div>
-          <div class="mb-3">
-            <label for="archivoPdf" class="form-label">Archivo PDF</label>
-            <input type="file" class="form-control" id="archivoPdf" (change)="onFileSelected($event)" required>
-          </div>
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="permiteComentarios" [(ngModel)]="nuevaEdicion.permiteComentarios" name="permiteComentarios">
-            <label class="form-check-label" for="permiteComentarios">Permitir Comentarios</label>
-          </div>
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="permiteMegusta" [(ngModel)]="nuevaEdicion.permiteMegusta" name="permiteMegusta">
-            <label class="form-check-label" for="permiteMegusta">Permitir Me Gusta</label>
-          </div>
-          <button type="submit" class="btn btn-success" >Cargar Edición</button>
-        </form>
-      </div>
+  <h2>Cargar Nueva Edición</h2>
+  <div class="card mb-4">
+    <div class="card-body">
+      <form #edicionForm="ngForm" (ngSubmit)="cargarEdicion(edicionForm)">
+        <div class="mb-3">
+          <label for="tituloEdicion" class="form-label">Título de la Edición</label>
+          <input type="text" class="form-control" id="tituloEdicion" [(ngModel)]="nuevaEdicion.tituloEdicion" name="tituloEdicion" required>
+        </div>
+        <div class="mb-3">
+          <label for="fechaCreacion" class="form-label">Fecha de Creación</label>
+          <input type="date" class="form-control" id="fechaCreacion" [(ngModel)]="nuevaEdicion.fechaCreacion" name="fechaCreacion" required>
+        </div>
+        <div class="mb-3">
+          <label for="archivoPdf" class="form-label">Archivo PDF</label>
+          <input type="file" class="form-control" id="archivoPdf" (change)="onFileSelected($event)" required>
+        </div>
+        <button type="submit" class="btn btn-success">Cargar Edición</button>
+      </form>
     </div>
   </div>
+</div>

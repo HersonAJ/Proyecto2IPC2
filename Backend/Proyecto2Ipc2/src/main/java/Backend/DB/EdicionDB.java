@@ -21,7 +21,7 @@ import java.util.List;
 public class EdicionDB {
 
     public boolean insertarEdicion(Edicion edicion) throws SQLException {
-    String sql = "INSERT INTO EdicionRevista (id_revista, titulo_edicion, fecha_creacion, archivo_pdf, estado, permite_comentarios, permite_megusta) VALUES (?, ?, ?, ?, 'Activo', ?, ?)";
+    String sql = "INSERT INTO EdicionRevista (id_revista, titulo_edicion, fecha_creacion, archivo_pdf, estado) VALUES (?, ?, ?, ?, 'Activo')";
     
     try (Connection connection = DataSourceDB.getInstance().getConnection();
          PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -30,8 +30,7 @@ public class EdicionDB {
         statement.setString(2, edicion.getTituloEdicion());
         statement.setDate(3, new java.sql.Date(edicion.getFechaCreacion().getTime()));
         statement.setBytes(4, edicion.getArchivoPdf());
-        statement.setBoolean(5, edicion.isPermiteComentarios());
-        statement.setBoolean(6, edicion.isPermiteMegusta());
+
         
         int rowsInserted = statement.executeUpdate();
         return rowsInserted > 0;
@@ -40,7 +39,7 @@ public class EdicionDB {
  
     public List<Edicion> obtenerEdicionesPorRevista(int idRevista) {
     List<Edicion> ediciones = new ArrayList<>();
-    String query = "SELECT id_edicion, id_revista, titulo_edicion, fecha_creacion, estado, permite_comentarios, permite_megusta FROM EdicionRevista WHERE id_revista = ? AND estado = 'Activo'";
+    String query = "SELECT id_edicion, id_revista, titulo_edicion, fecha_creacion, estado FROM EdicionRevista WHERE id_revista = ? AND estado = 'Activo'";
 
     try (Connection connection = DataSourceDB.getInstance().getConnection();
          PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -55,8 +54,7 @@ public class EdicionDB {
             edicion.setTituloEdicion(resultSet.getString("titulo_edicion"));
             edicion.setFechaCreacion(resultSet.getDate("fecha_creacion"));
             edicion.setEstado(resultSet.getString("estado"));
-            edicion.setPermiteComentarios(resultSet.getBoolean("permite_comentarios"));
-            edicion.setPermiteMegusta(resultSet.getBoolean("permite_megusta"));
+
             ediciones.add(edicion);
         }
     } catch (SQLException e) {

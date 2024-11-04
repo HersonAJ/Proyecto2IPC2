@@ -17,8 +17,6 @@ export class CargarEdicionComponent {
   nuevaEdicion = {
     tituloEdicion: '',
     fechaCreacion: '',
-    permiteComentarios: false,
-    permiteMegusta: false,
     archivoPdf: null
   };
 
@@ -47,9 +45,6 @@ export class CargarEdicionComponent {
       if (this.nuevaEdicion.archivoPdf) {
         formData.append('archivoPdf', this.nuevaEdicion.archivoPdf);
       }
-
-      formData.append('permiteComentarios', this.nuevaEdicion.permiteComentarios.toString());
-      formData.append('permiteMegusta', this.nuevaEdicion.permiteMegusta.toString());
 
       this.edicionesService.insertarEdicion(formData).subscribe(response => {
         alert('Edición cargada exitosamente:');

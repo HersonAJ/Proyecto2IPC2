@@ -18,21 +18,17 @@ public class Edicion {
     private String tituloEdicion;
     private Date fechaCreacion;
     private String estado; // Cambiado a String
-    private boolean permiteComentarios;
-    private boolean permiteMegusta;
     private byte[] archivoPdf;
 
     public Edicion() {
     }
 
-    public Edicion(int idEdicion, int idRevista, String tituloEdicion, Date fechaCreacion, String estado, boolean permiteComentarios, boolean permiteMegusta, byte[] archivoPdf) {
+    public Edicion(int idEdicion, int idRevista, String tituloEdicion, Date fechaCreacion, String estado, byte[] archivoPdf) {
         this.idEdicion = idEdicion;
         this.idRevista = idRevista;
         this.tituloEdicion = tituloEdicion;
         this.fechaCreacion = fechaCreacion;
         this.estado = estado;
-        this.permiteComentarios = permiteComentarios;
-        this.permiteMegusta = permiteMegusta;
         this.archivoPdf = archivoPdf;
     }
 
@@ -76,22 +72,6 @@ public class Edicion {
         this.estado = estado;
     }
 
-    public boolean isPermiteComentarios() {
-        return permiteComentarios;
-    }
-
-    public void setPermiteComentarios(boolean permiteComentarios) {
-        this.permiteComentarios = permiteComentarios;
-    }
-
-    public boolean isPermiteMegusta() {
-        return permiteMegusta;
-    }
-
-    public void setPermiteMegusta(boolean permiteMegusta) {
-        this.permiteMegusta = permiteMegusta;
-    }
-
     public byte[] getArchivoPdf() {
         return archivoPdf;
     }
@@ -100,3 +80,4 @@ public class Edicion {
         this.archivoPdf = archivoPdf;
     }
 }
+
