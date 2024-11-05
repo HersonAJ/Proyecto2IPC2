@@ -1,0 +1,50 @@
+<div class="container my-4">
+    <h2>Información de la Revista</h2>
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">{{ revista.titulo }}</h5>
+        <p class="card-text">{{ revista.descripcion }}</p>
+        <p><strong>Categoría:</strong> {{ revista.categoria }}</p>
+        <p><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion }}</p>
+        <div>
+          <button class="btn btn-outline-primary" (click)="darMeGusta()">Me Gusta</button>
+          <span>{{ getMeGustaCount() }} Me Gusta(s)</span>
+        </div>
+      </div>
+    </div>
+  
+    <h3>Ediciones</h3>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ul class="list-group">
+          <li *ngFor="let edicion of ediciones" class="list-group-item">
+            <h5 class="mb-1">{{ edicion.tituloEdicion }}</h5>
+            <p class="mb-1">{{ edicion.descripcion }}</p>
+            <small><strong>Fecha de Publicación:</strong> {{ edicion.fechaCreacion | date: 'shortDate' }}</small><br>
+            <a (click)="verPdf(edicion.idEdicion)" class="btn btn-primary mt-2">Ver PDF</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  
+    <h3>Comentarios</h3>
+    <div class="card mb-4">
+      <div class="card-body">
+        <ul class="list-group mb-3">
+          <li class="list-group-item" *ngFor="let comentario of comentarios">
+            <strong>{{ comentario.usuario }}</strong>
+            <p>{{ comentario.contenido }}</p>
+            <small class="text-muted">{{ comentario.fechaCreacion | date: 'short' }}</small>
+          </li>
+        </ul>
+        <div class="mb-3">
+          <textarea class="form-control" [(ngModel)]="nuevoComentario" placeholder="Escribe un comentario..."></textarea>
+        </div>
+        <div class="mb-3">
+          <input type="date" class="form-control" [(ngModel)]="fechaComentario" placeholder="Fecha del comentario">
+        </div>
+        <button class="btn btn-primary" (click)="agregarComentario()">Agregar Comentario</button>
+      </div>
+    </div>
+  </div>
+  

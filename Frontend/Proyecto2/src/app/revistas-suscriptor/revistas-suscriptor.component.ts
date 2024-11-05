@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RevistaSuscriptorService } from '../Services/revista-suscriptor.service';
 import { AuthService } from '../Services/auth.service';
 import { RouterModule } from '@angular/router';
-import { RevistaInfoService } from '../revista-info.service'; 
+import { RevistaInfoService } from '../Services/revista-info.service'; 
 
 interface Revista {
   idRevista: number;
