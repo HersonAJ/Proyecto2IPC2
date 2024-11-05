@@ -1,0 +1,5 @@
+.descripcion {
+    word-wrap: break-word; /* Permite que las palabras se ajusten */
+    overflow-wrap: break-word; /* Para compatibilidad adicional con otros navegadores */
+  }
+  
