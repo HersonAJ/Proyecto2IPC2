@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-md-8">
               <h5 class="mb-1">{{ publicacion.titulo }}</h5>
-              <p class="mb-1">{{ publicacion.descripcion }}</p>
+              <p class="mb-1" style="word-wrap: break-word;">{{ publicacion.descripcion }}</p>
               <small><strong>Categoría:</strong> {{ publicacion.categoria }}</small><br>
               <small><strong>Fecha de Creación:</strong> {{ publicacion.fechaCreacion | date: 'shortDate' }}</small><br>
               <small><strong>Permite Comentarios:</strong> {{ publicacion.permiteComentarios ? "Sí" : "No" }}</small><br>
@@ -34,7 +34,6 @@
       </ul>
     </div>
   </div>
- 
 
   <button (click)="agregarNuevaRevista()" type="button" class="btn btn-success">Agregar Nueva Revista</button>
   <button (click)="eliminarRevistas()" type="button" class="btn btn-danger">Eliminar Revistas</button>
