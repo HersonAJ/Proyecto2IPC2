@@ -1,0 +1,23 @@
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <h2>Mis Suscripciones</h2>
+        <div *ngIf="revistas && revistas.length; else noSuscripciones">
+          <div class="card mb-3" *ngFor="let revista of revistas">
+            <div class="card-body">
+              <h5 class="card-title">Título: {{ revista.titulo }}</h5>
+              <p class="card-text">Descripción: {{ revista.descripcion }}</p>
+              <p class="card-text"><small class="text-muted">Categoría: {{ revista.categoria }}</small></p>
+              <p class="card-text"><small class="text-muted">Fecha de creación: {{ revista.fechaCreacion | date }}</small></p>
+              <button (click)="irARevistaInfo(revista.idRevista)" class="btn btn-primary">Ingresar</button>
+            </div>
+          </div>
+        </div>
+        <ng-template #noSuscripciones>
+          <div class="alert alert-info" role="alert">
+            No tienes suscripciones activas.
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
