@@ -4,15 +4,17 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { RevistaService } from '../Services/revista.service';
 import { RestConstants } from '../rest-constants';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ver-archivo',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './ver-archivo.component.html',
   styleUrls: ['./ver-archivo.component.css'],
 })
 export class VerArchivoComponent implements OnInit {
-  pdfSrc: SafeResourceUrl = '';
+  pdfSrc: SafeResourceUrl = '';  // URL segura para mostrar el PDF
   idRevista: number = 0;
   idEdicion: number = 0;
   revista: any = {};
@@ -33,7 +35,7 @@ export class VerArchivoComponent implements OnInit {
   
     this.http.get(pdfUrl, { responseType: 'blob' }).subscribe(blob => {
       const blobUrl = window.URL.createObjectURL(blob);
-      this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl) as SafeResourceUrl;
+      this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(blobUrl);
     }, error => {
       console.error('Error fetching PDF:', error.message, 'Status:', error.status, 'URL:', pdfUrl);
     });
@@ -42,5 +44,4 @@ export class VerArchivoComponent implements OnInit {
       this.revista = data;
     });
   }
-  
 }

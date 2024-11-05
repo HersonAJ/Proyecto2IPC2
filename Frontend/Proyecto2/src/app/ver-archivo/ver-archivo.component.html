@@ -3,7 +3,6 @@
 <body>
     <div class="container my-4">
         <div class="row">
-
             <main class="col-md-9">
                 <section>
                     <h2>Detalles de la Revista</h2>
@@ -14,16 +13,10 @@
                             <p class="card-text"><strong>Autor:</strong> {{ revista.autor }}</p>
                             <p class="card-text"><strong>Categoría:</strong> {{ revista.categoria }}</p>
                             <p class="card-text"><strong>Me Gusta:</strong> {{ revista.totalMeGusta }}</p>
-
-
-                            <iframe [src]="pdfSrc" width="100%" height="600px"></iframe>
-
-
-
-
-
-
-                            <a [href]="pdfSrc" class="btn btn-primary mt-3" download>Descargar PDF</a>
+                            <div *ngIf="pdfSrc"> 
+                              <iframe [src]="pdfSrc" width="100%" height="600px"></iframe>
+                              <a [href]="pdfSrc" class="btn btn-primary mt-3" download>Descargar PDF</a>
+                            </div>
                         </div>
                     </div>
                 </section>
