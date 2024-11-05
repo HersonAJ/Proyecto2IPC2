@@ -14,7 +14,7 @@ import { RecargarCarteraComponent } from './recargar-cartera-editor/recargar-car
 import { CarteraGlobalComponent } from './cartera-global/cartera-global.component';
 //faltantes
 import { EliminarRevistaComponent } from './eliminar-revista/eliminar-revista.component';
-//import { RevistasSuscriptorComponent } from './revistas-suscriptor/revistas-suscriptor.component';
+import { RevistasSuscriptorComponent } from './revistas-suscriptor/revistas-suscriptor.component';
 
 
 
@@ -33,7 +33,7 @@ export const routes: Routes = [
   { path: 'recargar-cartera', component: RecargarCarteraComponent},
   { path: 'recargar-cartera-global', component: CarteraGlobalComponent},
   { path: 'eliminar-revista', component: EliminarRevistaComponent},
-  //{ path: 'revistas', component: RevistasSuscriptorComponent}
+  { path: 'revistas', component: RevistasSuscriptorComponent}
 ];
 
 //agregue esto para tratar de hacer la referencia al registro
