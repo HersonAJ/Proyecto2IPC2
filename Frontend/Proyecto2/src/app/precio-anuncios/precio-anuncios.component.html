@@ -1,0 +1,59 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Gestión de Precios de Anuncios</h2>
+  
+    <!-- Mostrar Precios de Anuncios -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Precios Actuales de Anuncios</h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Tipo de Anuncio</th>
+                <th>Duración</th>
+                <th>Precio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let precio of preciosAnuncios">
+                <td>{{ precio.tipo }}</td>
+                <td>{{ precio.duracion }}</td>
+                <td>{{ precio.precio }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Fijar Precio de Anuncio -->
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Fijar Nuevo Precio de Anuncio</h5>
+        <form (submit)="fijarPrecioAnuncio()">
+          <div class="form-group mb-3">
+            <label for="tipo">Tipo de Anuncio</label>
+            <select class="form-control" id="tipo" [(ngModel)]="nuevoPrecio.tipo" name="tipo" required>
+              <option value="Texto">Texto</option>
+              <option value="Texto e Imagen">Texto e Imagen</option>
+              <option value="Video">Video</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="duracion">Duración</label>
+            <select class="form-control" id="duracion" [(ngModel)]="nuevoPrecio.duracion" name="duracion" required>
+              <option value="1 día">1 día</option>
+              <option value="3 días">3 días</option>
+              <option value="1 semana">1 semana</option>
+              <option value="2 semanas">2 semanas</option>
+            </select>
+          </div>
+          <div class="form-group mb-3">
+            <label for="precio">Precio</label>
+            <input type="number" class="form-control" id="precio" [(ngModel)]="nuevoPrecio.precio" name="precio" min="0" step="0.01" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Fijar Precio</button>
+        </form>
+      </div>
+    </div>
+  </div>
