@@ -1,0 +1,32 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Asignar Costo Diario a Revistas</h2>
+  
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Información Actual</h5>
+        <p class="card-text">Costo asignado actualmente: <strong>{{ costoActual }}</strong></p>
+        <p class="card-text">Cantidad de revistas: <strong>{{ cantidadRevistas }}</strong></p>
+      </div>
+    </div>
+  
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Asignar Nuevo Costo Diario</h5>
+        <form (submit)="asignarNuevoCosto()">
+          <div class="form-group mb-3">
+            <label for="nuevoCosto">Nuevo Costo Diario</label>
+            <input type="number" class="form-control" id="nuevoCosto" [(ngModel)]="nuevoCosto" name="nuevoCosto" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Asignar Costo</button>
+        </form>
+      </div>
+    </div>
+  
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Cobro Diario</h5>
+        <button (click)="procesarCobroDiario()" class="btn btn-danger">Procesar Cobro Diario</button>
+      </div>
+    </div>
+  </div>
+  
