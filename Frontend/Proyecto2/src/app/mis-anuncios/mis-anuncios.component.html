@@ -1,0 +1,26 @@
+<div class="container mt-5">
+    <h2>Mis Anuncios</h2>
+    <div *ngIf="anuncios.length === 0" class="alert alert-info" role="alert">
+      No tienes anuncios en este momento.
+    </div>
+    <div *ngFor="let anuncio of anuncios" class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ anuncio.tipo }}</h5>
+        <p class="card-text">{{ anuncio.contenido }}</p>
+        <div *ngIf="anuncio.imagen">
+          <p><strong>Imagen:</strong> <a [href]="anuncio.imagen" target="_blank">{{ anuncio.imagen }}</a></p>
+        </div>
+        <div *ngIf="anuncio.video">
+          <p><strong>Video:</strong> <a [href]="anuncio.video" target="_blank">{{ anuncio.video }}</a></p>
+        </div>
+        <p><strong>Fecha de Inicio:</strong> {{ anuncio.fechaInicio | date }}</p>
+        <p><strong>Fecha de Fin:</strong> {{ anuncio.fechaFin | date }}</p>
+        <p><strong>Estado:</strong> {{ anuncio.estado }}</p>
+  
+        <div class="btn-group" role="group">
+          <button type="button" class="btn btn-success" [disabled]="anuncio.estado === 'Activo'" (click)="cambiarEstado(anuncio.idAnuncio, 'Activo')">Activar</button>
+          <button type="button" class="btn btn-danger" [disabled]="anuncio.estado === 'Inactivo'" (click)="cambiarEstado(anuncio.idAnuncio, 'Inactivo')">Desactivar</button>
+        </div>
+      </div>
+    </div>
+  </div>

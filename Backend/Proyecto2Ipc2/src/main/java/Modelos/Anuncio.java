@@ -111,5 +111,18 @@ public class Anuncio {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+
+    // Método para obtener la duración del anuncio
+    public String getDuracion() {
+        long diffInMillies = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
+        long diff = java.util.concurrent.TimeUnit.DAYS.convert(diffInMillies, java.util.concurrent.TimeUnit.MILLISECONDS);
+
+        if (diff == 1) return "1 día";
+        else if (diff == 3) return "3 días";
+        else if (diff == 7) return "1 semana";
+        else if (diff == 14) return "2 semanas";
+        else return "Duración no válida";
+    }
 }
 

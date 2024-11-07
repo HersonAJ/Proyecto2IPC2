@@ -5,7 +5,10 @@
 package RestAPI.Resources;
 
 import Backend.DB.AnuncioDB;
+import Backend.DB.MisAnunciosDB;
+import Backend.DB.TransaccionDB;
 import Modelos.Anuncio;
+import Modelos.AuthService;
 import Modelos.JWTHelper;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -16,7 +19,12 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.PUT;
+import jakarta.ws.rs.PathParam;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
+
 /**
  *
  * @author herson
@@ -26,39 +34,30 @@ import java.io.UnsupportedEncodingException;
 public class AnuncioController {
 
     private AnuncioDB anuncioDB = new AnuncioDB();
-
-    private boolean validarAnunciante(String token) throws JWTVerificationException, UnsupportedEncodingException {
-        DecodedJWT jwt = JWTHelper.verifyToken(token);
-        String tipoUsuario = jwt.getClaim("tipoUsuario").asString();
-        return "Comprador_Anuncios".equals(tipoUsuario);
-    }
+    private AuthService authService = new AuthService();
+    private TransaccionDB transaccionDB = new TransaccionDB();
+    private MisAnunciosDB misAnunciosDB = new MisAnunciosDB(); 
 
     @POST
     @Path("/crearTexto")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response crearAnuncioTexto(@HeaderParam("Authorization") String token, Anuncio anuncio) {
+        Response authResponse = authService.validateTokenForCompradorAnuncios(token);
+        if (authResponse != null) {
+            return authResponse;
+        }
+
+        // Procesar compra del anuncio
+        Response compraResponse = transaccionDB.procesarCompraAnuncio(anuncio.getIdUsuario(), "Texto", anuncio.getDuracion());
+        if (compraResponse.getStatus() != Response.Status.OK.getStatusCode()) {
+            return compraResponse;
+        }
+
         try {
-            // Eliminar el prefijo "Bearer "
-            if (token.startsWith("Bearer ")) {
-                token = token.substring(7);
-            }
-
-            if (!validarAnunciante(token)) {
-                return Response.status(Response.Status.FORBIDDEN)
-                        .entity("{\"message\":\"No tienes permisos para realizar esta acción.\"}")
-                        .build();
-            }
-
             anuncioDB.insertarAnuncioTexto(anuncio);
             return Response.status(Response.Status.CREATED)
                     .entity("{\"message\":\"Anuncio de texto creado correctamente.\"}")
-                    .build();
-
-        } catch (JWTVerificationException | IllegalArgumentException | UnsupportedEncodingException e) {
-            System.out.println("Error al verificar el token: " + e.getMessage());
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("{\"message\":\"Token inválido.\"}")
                     .build();
         } catch (Exception e) {
             System.out.println("Error al crear anuncio de texto: " + e.getMessage());
@@ -73,27 +72,21 @@ public class AnuncioController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response crearAnuncioTextoImagen(@HeaderParam("Authorization") String token, Anuncio anuncio) {
+        Response authResponse = authService.validateTokenForCompradorAnuncios(token);
+        if (authResponse != null) {
+            return authResponse;
+        }
+
+        // Procesar compra del anuncio
+        Response compraResponse = transaccionDB.procesarCompraAnuncio(anuncio.getIdUsuario(), "Texto e Imagen", anuncio.getDuracion());
+        if (compraResponse.getStatus() != Response.Status.OK.getStatusCode()) {
+            return compraResponse;
+        }
+
         try {
-            // Eliminar el prefijo "Bearer "
-            if (token.startsWith("Bearer ")) {
-                token = token.substring(7);
-            }
-
-            if (!validarAnunciante(token)) {
-                return Response.status(Response.Status.FORBIDDEN)
-                        .entity("{\"message\":\"No tienes permisos para realizar esta acción.\"}")
-                        .build();
-            }
-
             anuncioDB.insertarAnuncioTextoImagen(anuncio);
             return Response.status(Response.Status.CREATED)
                     .entity("{\"message\":\"Anuncio de texto e imagen creado correctamente.\"}")
-                    .build();
-
-        } catch (JWTVerificationException | IllegalArgumentException | UnsupportedEncodingException e) {
-            System.out.println("Error al verificar el token: " + e.getMessage());
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("{\"message\":\"Token inválido.\"}")
                     .build();
         } catch (Exception e) {
             System.out.println("Error al crear anuncio de texto e imagen: " + e.getMessage());
@@ -108,27 +101,21 @@ public class AnuncioController {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response crearAnuncioVideo(@HeaderParam("Authorization") String token, Anuncio anuncio) {
+        Response authResponse = authService.validateTokenForCompradorAnuncios(token);
+        if (authResponse != null) {
+            return authResponse;
+        }
+
+        // Procesar compra del anuncio
+        Response compraResponse = transaccionDB.procesarCompraAnuncio(anuncio.getIdUsuario(), "Video", anuncio.getDuracion());
+        if (compraResponse.getStatus() != Response.Status.OK.getStatusCode()) {
+            return compraResponse;
+        }
+
         try {
-            // Eliminar el prefijo "Bearer "
-            if (token.startsWith("Bearer ")) {
-                token = token.substring(7);
-            }
-
-            if (!validarAnunciante(token)) {
-                return Response.status(Response.Status.FORBIDDEN)
-                        .entity("{\"message\":\"No tienes permisos para realizar esta acción.\"}")
-                        .build();
-            }
-
             anuncioDB.insertarAnuncioVideo(anuncio);
             return Response.status(Response.Status.CREATED)
                     .entity("{\"message\":\"Anuncio de video creado correctamente.\"}")
-                    .build();
-
-        } catch (JWTVerificationException | IllegalArgumentException | UnsupportedEncodingException e) {
-            System.out.println("Error al verificar el token: " + e.getMessage());
-            return Response.status(Response.Status.UNAUTHORIZED)
-                    .entity("{\"message\":\"Token inválido.\"}")
                     .build();
         } catch (Exception e) {
             System.out.println("Error al crear anuncio de video: " + e.getMessage());
@@ -137,5 +124,58 @@ public class AnuncioController {
                     .build();
         }
     }
-}
 
+    @GET
+    @Path("/misAnuncios/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerAnunciosPorUsuario(@PathParam("idUsuario") int idUsuario) {
+        try {
+            List<Anuncio> anuncios = misAnunciosDB.obtenerAnunciosPorUsuario(idUsuario);
+            if (anuncios.isEmpty()) {
+                return Response.status(Response.Status.NO_CONTENT).entity("{\"message\":\"No hay anuncios para este usuario.\"}").build();
+            }
+            return Response.status(Response.Status.OK).entity(anuncios).build();
+        } catch (Exception e) {
+            System.out.println("Error al obtener anuncios: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al obtener anuncios.\"}").build();
+        }
+    }
+
+    //metodo para obtener anuncios desde la base de datos
+    @GET
+    @Path("/anunciosActivos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerAnunciosActivos() {
+        try {
+            List<Anuncio> anuncios = anuncioDB.obtenerAnunciosActivos();
+            if (anuncios.isEmpty()) {
+                return Response.status(Response.Status.NO_CONTENT).entity("{\"message\":\"No hay anuncios activos.\"}").build();
+            }
+            return Response.status(Response.Status.OK).entity(anuncios).build();
+        } catch (Exception e) {
+            System.out.println("Error al obtener anuncios activos: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al obtener anuncios activos.\"}").build();
+        }
+    }
+
+    //metodo para actualizar estado de los anuncios
+    @PUT
+    @Path("/{idAnuncio}/estado/{nuevoEstado}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response cambiarEstadoAnuncio(@PathParam("idAnuncio") int idAnuncio, @PathParam("nuevoEstado") String nuevoEstado) {
+        try {
+            // Verificar que el nuevo estado es válido
+            if (!nuevoEstado.equals("Activo") && !nuevoEstado.equals("Inactivo")) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Estado inválido").build();
+            }
+
+            anuncioDB.cambiarEstadoAnuncio(idAnuncio, nuevoEstado);
+            return Response.ok().entity("Estado del anuncio actualizado exitosamente").build();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Error al actualizar el estado del anuncio").build();
+        }
+    }
+}
