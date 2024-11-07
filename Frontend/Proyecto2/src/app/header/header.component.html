@@ -20,6 +20,9 @@
       <li *ngIf="sesionIniciada && tipoUsuario === 'Administrador'"><a routerLink="precio-anuncios" class="nav-link px-2">Precio Anuncios</a></li>
       <li *ngIf="sesionIniciada && tipoUsuario === 'Suscriptor'"><a routerLink="revistas" class="nav-link px-2">Revistas</a></li>
       <li *ngIf="sesionIniciada && tipoUsuario === 'Suscriptor'"><a routerLink="mis-suscripciones" class="nav-link px-2">Mis Suscripciones</a></li>
+      <li *ngIf="sesionIniciada && tipoUsuario === 'Comprador_Anuncios'"><a routerLink="recargar-cartera" class="nav-link px-2">Recargar Cartera</a></li>
+      <li *ngIf="sesionIniciada && tipoUsuario === 'Comprador_Anuncios'"><a routerLink="comprar-anuncio" class="nav-link px-2">Comprar Anuncios</a></li>
+      <li *ngIf="sesionIniciada && tipoUsuario === 'Comprador_Anuncios'"><a routerLink="mis-anuncios" class="nav-link px-2">Mis Anuncios</a></li>
     </ul>
     <div class="col-md-3 text-end">
       <ng-container *ngIf="!sesionIniciada; else logoutTemplate">

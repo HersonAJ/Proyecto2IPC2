@@ -1,5 +1,4 @@
 
-
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
@@ -19,10 +18,12 @@ import { RevistaInfoComponent } from './revista-info/revista-info.component';
 import { AsignarCostoComponent } from './asignar-costo/asignar-costo.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { ReportePopularComponent } from './reporte-popular-admin/reporte-popular-admin.component';
-
 import { PrecioAnunciosComponent } from './precio-anuncios/precio-anuncios.component';
 import { provideRouter, RouterModule } from '@angular/router'; 
 import { authGuardGuard } from './auth-guard.guard';
+//nuevos
+import { ComprarAnuncioComponent } from './comprar-anuncio/comprar-anuncio.component';
+import { MisAnunciosComponent } from './mis-anuncios/mis-anuncios.component';
 
 
 export const routes: Routes = [
@@ -54,6 +55,10 @@ export const routes: Routes = [
   { path: 'revistas', component: RevistasSuscriptorComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },
   { path: 'mis-suscripciones', component: MisSuscripcionesComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },
   { path: 'revista-info/:idRevista', component: RevistaInfoComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },
+
+  //comprador de anuncios
+  { path: 'comprar-anuncio', component: ComprarAnuncioComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Comprador_Anuncios'] } },
+  { path: 'mis-anuncios', component: MisAnunciosComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Comprador_Anuncios'] } },
 ];
 
 // agrega la referencia al registro
