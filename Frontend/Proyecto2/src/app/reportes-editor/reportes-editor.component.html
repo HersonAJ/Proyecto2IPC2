@@ -1,0 +1,32 @@
+<div class="container mt-4">
+    <!-- Botones de reportes en una fila horizontal -->
+    <div class="row mb-3">
+      <div class="col">
+        <button class="btn btn-primary" (click)="seleccionarReporte('comentarios')">Reporte Comentarios</button>
+        <button class="btn btn-secondary" (click)="seleccionarReporte('suscripciones')">Reporte Suscripciones</button>
+        <button class="btn btn-success" (click)="seleccionarReporte('meGusta')">Reporte "Me Gusta"</button>
+      </div>
+    </div>
+  
+    <!-- Contenido dinámico de reportes -->
+    <div class="row">
+      <div class="col">
+        <!-- Aquí se mostrará el contenido del reporte seleccionado -->
+        <ng-container *ngIf="reporteSeleccionado === 'comentarios'">
+          <!-- Se inyectará el componente del reporte de comentarios aquí -->
+          <app-reporte-comentarios-editor></app-reporte-comentarios-editor>
+        </ng-container>
+        <ng-container *ngIf="reporteSeleccionado === 'suscripciones'">
+          <!-- Se inyectará el componente del reporte de suscripciones aquí -->
+          <app-reporte-suscripcion-editor></app-reporte-suscripcion-editor>
+        </ng-container>
+        <ng-container *ngIf="reporteSeleccionado === 'meGusta'">
+          <!-- Se inyectará el componente del reporte de "Me Gusta" aquí -->
+          <app-reporte-megusta-editor></app-reporte-megusta-editor>
+        </ng-container>
+    
+      </div>
+    </div>
+  </div>
+  
+  

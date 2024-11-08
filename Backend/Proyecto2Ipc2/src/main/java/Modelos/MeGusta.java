@@ -15,6 +15,24 @@ public class MeGusta {
     private int idUsuario;
     private int idRevista;
     private Date fechaMeGusta;
+    private String nombreUsuario;
+    private String tituloRevista;
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public void setTituloRevista(String tituloRevista) {
+        this.tituloRevista = tituloRevista;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public String getTituloRevista() {
+        return tituloRevista;
+    }
 
     // Getters y Setters
 

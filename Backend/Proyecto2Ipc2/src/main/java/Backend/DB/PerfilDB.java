@@ -44,7 +44,7 @@ public class PerfilDB {
         return usuario;
     }
 
-    // Método para actualizar el perfil del usuario (sin contraseña)
+    // Método para actualizar el perfil del usuario (no se envia contraseña)
     public boolean actualizarPerfilUsuario(Usuario usuario) {
         String sql = "UPDATE Usuario SET nombre = ?, foto_perfil = ?, descripcion = ?, hobbies = ?, temas_interes = ? WHERE id_usuario = ?";
         try (Connection connection = DataSourceDB.getInstance().getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {

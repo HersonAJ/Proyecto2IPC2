@@ -14,6 +14,7 @@
       <li *ngIf="tipoUsuario === 'Editor'"><a routerLink="misPublicaciones" class="nav-link px-2">Mis Publicaciones</a></li>
       <li><a href="#" class="nav-link px-2">About</a></li>
       <li *ngIf="sesionIniciada && tipoUsuario === 'Editor'"><a routerLink="recargar-cartera" class="nav-link px-2">Recargar Cartera</a></li>
+      <li *ngIf="sesionIniciada && tipoUsuario === 'Editor'"><a routerLink="reportes-editor" class="nav-link px-2">Reportes de Editor</a></li>
       <li *ngIf="sesionIniciada && tipoUsuario === 'Administrador'"><a routerLink="recargar-cartera-global" class="nav-link px-2">Cartera Global</a></li>
       <li *ngIf="sesionIniciada && tipoUsuario === 'Administrador'"><a routerLink="asignar-costo" class="nav-link px-2">Asignar Costos</a></li>
       <li *ngIf="sesionIniciada && tipoUsuario === 'Administrador'"><a routerLink="reportes" class="nav-link px-2">Reportes</a></li>
@@ -35,3 +36,4 @@
     </div>
   </header>
 </div>
+

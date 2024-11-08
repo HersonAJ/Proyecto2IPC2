@@ -1,0 +1,52 @@
+<div class="container mt-4">
+    <h2 class="mb-4">Reporte de "Me Gusta"</h2>
+  
+    <!-- Filtro para intervalo de tiempo -->
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Especificar Intervalo de Tiempo y Revista (Opcional)</h5>
+        <form (submit)="generarReporte()">
+          <div class="form-group mb-3">
+            <label for="fechaInicio">Fecha Inicio</label>
+            <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="fechaInicio" name="fechaInicio" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="fechaFin">Fecha Fin</label>
+            <input type="date" class="form-control" id="fechaFin" [(ngModel)]="fechaFin" name="fechaFin" required>
+          </div>
+          <div class="form-group mb-3">
+            <label for="idRevista">ID de Revista (Opcional)</label>
+            <input type="number" class="form-control" id="idRevista" [(ngModel)]="idRevista" name="idRevista" placeholder="Ingrese ID de la revista si desea filtrar">
+          </div>
+          <button type="submit" class="btn btn-primary">Generar Reporte</button>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Tabla para mostrar el reporte -->
+    <div class="card" *ngIf="reporteMeGustas && reporteMeGustas.length > 0">
+      <div class="card-body">
+        <h5 class="card-title">Resultados del Reporte</h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID Me Gusta</th>
+                <th>Nombre del Usuario</th>
+                <th>Título de la Revista</th>
+                <th>Fecha Me Gusta</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let megusta of reporteMeGustas">
+                <td>{{ megusta.idMeGusta }}</td>
+                <td>{{ megusta.nombreUsuario }}</td>
+                <td>{{ megusta.tituloRevista }}</td>
+                <td>{{ megusta.fechaMeGusta | date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

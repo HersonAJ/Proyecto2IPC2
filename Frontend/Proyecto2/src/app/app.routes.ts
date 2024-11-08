@@ -25,6 +25,16 @@ import { authGuardGuard } from './auth-guard.guard';
 import { ComprarAnuncioComponent } from './comprar-anuncio/comprar-anuncio.component';
 import { MisAnunciosComponent } from './mis-anuncios/mis-anuncios.component';
 
+//component para editar perfil 
+import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
+//reportes del editor
+import { ReportesEditorComponent } from './reportes-editor/reportes-editor.component';
+
+
+
+
+
+
 
 export const routes: Routes = [
   // todos los usuarios
@@ -33,6 +43,7 @@ export const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'ver-archivo/:idRevista/:idEdicion', component: VerArchivoComponent },
+  { path: 'editar-perfil', component: EditarPerfilComponent },
 
   // editor
   { path: 'misPublicaciones', component: MisPublicacionesComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Editor'] } },
@@ -40,16 +51,17 @@ export const routes: Routes = [
   { path: 'revista/:idRevista', component: RevistaComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Editor'] } },
   { path: 'cargar-edicion/:idRevista', component: CargarEdicionComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Editor'] } },
   { path: 'eliminar-revista', component: EliminarRevistaComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Editor'] } },
+  { path: 'reportes-editor', component: ReportesEditorComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Editor'] } },
   
   // editor, comprador de anuncios
   { path: 'recargar-cartera', component: RecargarCarteraComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Editor', 'Comprador_Anuncios'] } },
 
   // admin
-  { path: 'recargar-cartera-global', component: CarteraGlobalComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Admin'] } },
-  { path: 'asignar-costo', component: AsignarCostoComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Admin'] } },
-  { path: 'reportes', component: ReportesComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Admin'] } },
-  { path: 'reporte-popular', component: ReportePopularComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Admin'] } },
-  { path: 'precio-anuncios', component: PrecioAnunciosComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Admin'] } },
+  { path: 'recargar-cartera-global', component: CarteraGlobalComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Administrador'] } },
+  { path: 'asignar-costo', component: AsignarCostoComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Administrador'] } },
+  { path: 'reportes', component: ReportesComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Administrador'] } },
+  { path: 'reporte-popular', component: ReportePopularComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Administrador'] } },
+  { path: 'precio-anuncios', component: PrecioAnunciosComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Administrador'] } },
 
   // suscriptor
   { path: 'revistas', component: RevistasSuscriptorComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },

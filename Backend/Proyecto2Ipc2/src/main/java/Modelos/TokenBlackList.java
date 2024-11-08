@@ -16,7 +16,7 @@ public class TokenBlackList {
 
     public static void add(String token) {
         blacklist.add(token);
-        System.out.println("Token añadido a la lista negra: " + token); // Log para verificar que se agrega el token
+       
     }
 
     public static boolean isBlacklisted(String token) {

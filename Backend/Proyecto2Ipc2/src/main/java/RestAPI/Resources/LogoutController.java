@@ -24,7 +24,7 @@ public class LogoutController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON) // Asegúrate de producir JSON
+    @Produces(MediaType.APPLICATION_JSON) 
     public Response logout(@Context HttpHeaders headers) {
         String token = headers.getRequestHeader("Authorization").get(0).replace("Bearer ", "");
 

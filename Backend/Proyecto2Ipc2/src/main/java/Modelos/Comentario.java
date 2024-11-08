@@ -16,9 +16,28 @@ public class Comentario {
     private int idRevista;
     private String contenido;
     private Date fechaCreacion;
+    private String nombreUsuario;
+    private String tituloRevista;
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
 
     // Getters y Setters
+    public void setTituloRevista(String tituloRevista) {
+        this.tituloRevista = tituloRevista;
+    }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public String getTituloRevista() {
+        return tituloRevista;
+    }
+
+    
+    
     public int getIdComentario() {
         return idComentario;
     }
@@ -59,5 +78,4 @@ public class Comentario {
         this.fechaCreacion = fechaCreacion;
     }
 }
-
 

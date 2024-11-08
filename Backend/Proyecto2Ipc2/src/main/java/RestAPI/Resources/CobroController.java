@@ -21,14 +21,11 @@ import jakarta.ws.rs.core.MediaType;
  *
  * @author herson
  */
-
-
 @Path("/cobro")
 public class CobroController {
 
     private CobroDB cobroDB = new CobroDB();
     private AuthService authService = new AuthService();
-
 
     @PUT
     @Path("/actualizarCostoDiario/{nuevoCostoPorDia}")
@@ -109,6 +106,7 @@ public class CobroController {
                     .build();
         }
     }
+
     @GET
     @Path("/obtenerCostoDiarioAsignado")
     @Produces(MediaType.APPLICATION_JSON)

@@ -42,7 +42,7 @@ import java.util.Date;
 public class JWTHelper {
 
     private static final String SECRET = "super-secret-key-must-be-256-bits-long";
-    private static final int EXPIRATION_TIME_IN_MS = 86400000; // 24 horas
+    private static final int EXPIRATION_TIME_IN_MS = 900000; // 15 minutos
 
     /**
      * Generates a signed JWT token.
