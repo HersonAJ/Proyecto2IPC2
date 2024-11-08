@@ -34,11 +34,25 @@ export class AnuncioService {
     );
   }
   
-  crearAnuncioTextoImagen(anuncio: any, token: string): Observable<any> {
+  crearAnuncioTextoImagen(anuncio: any, file: File, token: string): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('tipo', anuncio.tipo);
+    formData.append('contenido', anuncio.contenido);
+    formData.append('imagen', file, file.name);
+    formData.append('video', anuncio.video);
+    formData.append('idUsuario', anuncio.idUsuario.toString());
+    formData.append('fechaInicio', anuncio.fechaInicio);
+    formData.append('fechaFin', anuncio.fechaFin);
+    formData.append('estado', anuncio.estado);
+
     const headers = this.createHeaders(token);
-    return this.http.post(`${this.apiURL}/crearTextoImagen`, anuncio, { headers }).pipe(
+    return this.http.post(`${this.apiURL}/crearTextoImagen`, formData, { headers }).pipe(
       tap(() => {
         this.notificarActualizacionAnuncios();
+      }),
+      catchError(error => {
+        console.error('Error al crear anuncio de texto e imagen:', error);
+        return throwError(() => new Error('Hubo un problema al crear el anuncio de texto e imagen.'));
       })
     );
   }

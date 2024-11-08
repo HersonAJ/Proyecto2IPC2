@@ -24,6 +24,7 @@ export class ComprarAnuncioComponent {
   };
   duracion: string = '1 día';
   token: string = '';
+  selectedFile: File | null = null;
 
   constructor(
     private anuncioService: AnuncioService,
@@ -33,6 +34,10 @@ export class ComprarAnuncioComponent {
     this.anuncio.idUsuario = this.authService.getIdUsuario();
   }
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
+
   crearAnuncio() {
     if (this.anuncio.tipo === 'Texto') {
       this.anuncioService.crearAnuncioTexto(this.anuncio, this.token).subscribe(response => {
@@ -40,8 +45,8 @@ export class ComprarAnuncioComponent {
       }, error => {
         console.error('Error al crear anuncio de texto:', error);
       });
-    } else if (this.anuncio.tipo === 'Texto e Imagen') {
-      this.anuncioService.crearAnuncioTextoImagen(this.anuncio, this.token).subscribe(response => {
+    } else if (this.anuncio.tipo === 'Texto e Imagen' && this.selectedFile) {
+      this.anuncioService.crearAnuncioTextoImagen(this.anuncio, this.selectedFile, this.token).subscribe(response => {
         console.log('Anuncio de texto e imagen creado:', response);
       }, error => {
         console.error('Error al crear anuncio de texto e imagen:', error);

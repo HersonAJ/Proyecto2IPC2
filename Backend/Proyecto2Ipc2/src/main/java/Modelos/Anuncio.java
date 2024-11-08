@@ -14,7 +14,8 @@ public class Anuncio {
     private int idAnuncio;
     private String tipo;
     private String contenido;
-    private String imagen;  // URL o ruta de la imagen (para anuncios de texto e imagen)
+    private byte[] imagen;  // Ahora almacenará la imagen en formato binario
+    private String imagenBase64;
     private String video;   // URL del video (para anuncios de video)
     private int idUsuario;
     private Date fechaInicio; // Fecha de inicio de vigencia del anuncio (manual)
@@ -26,7 +27,7 @@ public class Anuncio {
     }
 
     // Constructor con parámetros
-    public Anuncio(int idAnuncio, String tipo, String contenido, String imagen, String video, int idUsuario, Date fechaInicio, Date fechaFin, String estado) {
+    public Anuncio(int idAnuncio, String tipo, String contenido, byte[] imagen, String video, int idUsuario, Date fechaInicio, Date fechaFin, String estado) {
         this.idAnuncio = idAnuncio;
         this.tipo = tipo;
         this.contenido = contenido;
@@ -39,6 +40,14 @@ public class Anuncio {
     }
 
     // Getters y Setters
+    
+    public String getImagenBase64(){
+        return imagenBase64;
+    }
+    
+    public void setImagenBase64(String imagenBase64) {
+        this.imagenBase64 = imagenBase64;
+    }
 
     public int getIdAnuncio() {
         return idAnuncio;
@@ -64,11 +73,11 @@ public class Anuncio {
         this.contenido = contenido;
     }
 
-    public String getImagen() {
+    public byte[] getImagen() {
         return imagen;
     }
 
-    public void setImagen(String imagen) {
+    public void setImagen(byte[] imagen) {
         this.imagen = imagen;
     }
 
@@ -112,7 +121,6 @@ public class Anuncio {
         this.estado = estado;
     }
 
-
     // Método para obtener la duración del anuncio
     public String getDuracion() {
         long diffInMillies = Math.abs(fechaFin.getTime() - fechaInicio.getTime());
@@ -125,4 +133,5 @@ public class Anuncio {
         else return "Duración no válida";
     }
 }
+
 

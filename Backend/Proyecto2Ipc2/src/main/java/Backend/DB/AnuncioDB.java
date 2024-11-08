@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 public class AnuncioDB {
@@ -44,7 +45,7 @@ public class AnuncioDB {
 
             preparedStatement.setString(1, anuncio.getTipo());
             preparedStatement.setString(2, anuncio.getContenido());
-            preparedStatement.setString(3, anuncio.getImagen());
+            preparedStatement.setBytes(3, anuncio.getImagen()); // Usamos setBytes para almacenar la imagen en formato binario
             preparedStatement.setInt(4, anuncio.getIdUsuario());
             preparedStatement.setDate(5, new java.sql.Date(anuncio.getFechaInicio().getTime()));
             preparedStatement.setDate(6, new java.sql.Date(anuncio.getFechaFin().getTime()));
@@ -89,7 +90,11 @@ public class AnuncioDB {
                 anuncio.setIdAnuncio(resultSet.getInt("id_anuncio"));
                 anuncio.setTipo(resultSet.getString("tipo"));
                 anuncio.setContenido(resultSet.getString("contenido"));
-                anuncio.setImagen(resultSet.getString("imagen"));
+                byte[] imagenBytes = resultSet.getBytes("imagen");
+                if (imagenBytes != null) {
+                    anuncio.setImagen(imagenBytes);
+                    anuncio.setImagenBase64(Base64.getEncoder().encodeToString(imagenBytes)); // Convertir a Base64
+                }
                 anuncio.setVideo(resultSet.getString("video"));
                 anuncio.setIdUsuario(resultSet.getInt("id_usuario"));
                 anuncio.setFechaInicio(resultSet.getDate("fecha_inicio"));
@@ -99,17 +104,18 @@ public class AnuncioDB {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("SQLException: " + e.getMessage());
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("VendorError: " + e.getErrorCode());
         }
         return anuncios;
     }
-    
-    //metodo para actualizar el estado de los anuncios
 
+    //metodo para actualizar el estado de los anuncios
     public void cambiarEstadoAnuncio(int idAnuncio, String nuevoEstado) {
         String query = "UPDATE Anuncio SET estado = ? WHERE id_anuncio = ?";
 
-        try (Connection connection = DataSourceDB.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DataSourceDB.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, nuevoEstado);
             preparedStatement.setInt(2, idAnuncio);
@@ -120,6 +126,3 @@ public class AnuncioDB {
         }
     }
 }
-
-
-

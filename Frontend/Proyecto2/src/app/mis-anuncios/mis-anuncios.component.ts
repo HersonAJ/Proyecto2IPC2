@@ -26,15 +26,17 @@ export class MisAnunciosComponent implements OnInit {
     if (this.token && this.idUsuario) {
       this.cargarAnuncios();
     }
-this.anuncioSubscription = this.anuncioService.obtenerActualizacionesAnuncios().subscribe(() => {
-  this.cargarAnuncios();
-})
-
+    this.anuncioSubscription = this.anuncioService.obtenerActualizacionesAnuncios().subscribe(() => {
+      this.cargarAnuncios();
+    })
   }
 
   cargarAnuncios() {
     this.anuncioService.obtenerMisAnuncios(this.idUsuario!, this.token!).subscribe(response => {
-      this.anuncios = response;
+      this.anuncios = response.map((anuncio: any) => ({
+        ...anuncio,
+        imagen: this.convertirBase64AImagen(anuncio.imagenBase64)
+      }));
     }, error => {
       console.error('Error al obtener anuncios:', error);
     });
@@ -49,5 +51,9 @@ this.anuncioSubscription = this.anuncioService.obtenerActualizacionesAnuncios().
         console.error('Error al cambiar estado del anuncio:', error);
       });
     }
+  }
+
+  convertirBase64AImagen(base64: string): string {
+    return `data:image/jpeg;base64,${base64}`;
   }
 }

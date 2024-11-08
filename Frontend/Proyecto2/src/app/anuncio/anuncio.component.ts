@@ -46,17 +46,17 @@ export class AnuncioComponent implements OnInit, OnDestroy {
         this.anunciosVideo = [];
         return;
       }
-  
+
       // Reiniciar los arreglos de anuncios
       this.anunciosTexto = [];
       this.anunciosImagen = [];
       this.anunciosVideo = [];
-  
+
       response.forEach((anuncio: any) => {
         if (anuncio.tipo === 'Texto') {
           this.anunciosTexto.push(anuncio);
         } else if (anuncio.tipo === 'Texto e Imagen') {
-          anuncio.imagen = this.sanitizer.bypassSecurityTrustUrl(anuncio.imagen);
+          anuncio.imagen = this.convertirBase64AImagen(anuncio.imagenBase64);
           this.anunciosImagen.push(anuncio);
         } else if (anuncio.tipo === 'Video') {
           const videoId = this.extractVideoId(anuncio.video);
@@ -67,6 +67,10 @@ export class AnuncioComponent implements OnInit, OnDestroy {
     }, error => {
       console.error('Error al obtener anuncios activos:', error);
     });
+  }
+
+  convertirBase64AImagen(base64: string): string {
+    return `data:image/jpeg;base64,${base64}`;
   }
 
   resetIndicesIfNeeded() {
@@ -89,7 +93,7 @@ export class AnuncioComponent implements OnInit, OnDestroy {
   }
 
   startAdRotation() {
-    this.intervalSubscription = interval(10000).subscribe(() => {
+    this.intervalSubscription = interval(60000).subscribe(() => {
       // Cambiar índices solo si hay elementos en el arreglo
       if (this.anunciosTexto.length > 0) {
         this.currentTextoIndex = (this.currentTextoIndex + 1) % this.anunciosTexto.length;

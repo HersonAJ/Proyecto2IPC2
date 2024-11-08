@@ -22,21 +22,24 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.PathParam;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 import java.util.List;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 /**
  *
  * @author herson
  */
-
 @Path("/anuncio")
 public class AnuncioController {
 
     private AnuncioDB anuncioDB = new AnuncioDB();
     private AuthService authService = new AuthService();
     private TransaccionDB transaccionDB = new TransaccionDB();
-    private MisAnunciosDB misAnunciosDB = new MisAnunciosDB(); 
+    private MisAnunciosDB misAnunciosDB = new MisAnunciosDB();
 
     @POST
     @Path("/crearTexto")
@@ -69,29 +72,52 @@ public class AnuncioController {
 
     @POST
     @Path("/crearTextoImagen")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response crearAnuncioTextoImagen(@HeaderParam("Authorization") String token, Anuncio anuncio) {
+    public Response crearAnuncioTextoImagen(@HeaderParam("Authorization") String token,
+            @FormDataParam("tipo") String tipo,
+            @FormDataParam("contenido") String contenido,
+            @FormDataParam("imagen") InputStream imagenInputStream,
+            @FormDataParam("video") String video,
+            @FormDataParam("idUsuario") int idUsuario,
+            @FormDataParam("fechaInicio") Date fechaInicio,
+            @FormDataParam("fechaFin") Date fechaFin,
+            @FormDataParam("estado") String estado) {
+
         Response authResponse = authService.validateTokenForCompradorAnuncios(token);
         if (authResponse != null) {
             return authResponse;
         }
 
+        // Crear objeto Anuncio antes de procesar la compra
+        Anuncio anuncio = new Anuncio();
+        anuncio.setTipo(tipo);
+        anuncio.setContenido(contenido);
+        anuncio.setVideo(video);
+        anuncio.setIdUsuario(idUsuario);
+        anuncio.setFechaInicio(fechaInicio);
+        anuncio.setFechaFin(fechaFin);
+        anuncio.setEstado(estado);
+
         // Procesar compra del anuncio
-        Response compraResponse = transaccionDB.procesarCompraAnuncio(anuncio.getIdUsuario(), "Texto e Imagen", anuncio.getDuracion());
+        Response compraResponse = transaccionDB.procesarCompraAnuncio(idUsuario, "Texto e Imagen", anuncio.getDuracion());
         if (compraResponse.getStatus() != Response.Status.OK.getStatusCode()) {
             return compraResponse;
         }
 
         try {
+            byte[] imagenBytes = imagenInputStream.readAllBytes();
+            anuncio.setImagen(imagenBytes);
+
             anuncioDB.insertarAnuncioTextoImagen(anuncio);
+
             return Response.status(Response.Status.CREATED)
                     .entity("{\"message\":\"Anuncio de texto e imagen creado correctamente.\"}")
                     .build();
-        } catch (Exception e) {
-            System.out.println("Error al crear anuncio de texto e imagen: " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                    .entity("{\"message\":\"Error al crear anuncio de texto e imagen.\"}")
+                    .entity("{\"message\":\"Error al leer la imagen.\"}")
                     .build();
         }
     }
@@ -136,8 +162,8 @@ public class AnuncioController {
             }
             return Response.status(Response.Status.OK).entity(anuncios).build();
         } catch (Exception e) {
-            System.out.println("Error al obtener anuncios: " + e.getMessage());
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error al obtener anuncios.\"}").build();
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"message\":\"Error inesperado al obtener anuncios.\"}").build();
         }
     }
 

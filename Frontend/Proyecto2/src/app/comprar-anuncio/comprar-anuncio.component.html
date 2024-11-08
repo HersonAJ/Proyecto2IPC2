@@ -1,59 +1,58 @@
 <div class="container">
-    <h2>Crear Anuncio</h2>
-    <form (ngSubmit)="crearAnuncio()">
-      <div class="form-group">
-        <label for="tipo">Tipo de Anuncio</label>
-        <select class="form-control" id="tipo" [(ngModel)]="anuncio.tipo" name="tipo" required>
-          <option value="Texto">Texto</option>
-          <option value="Texto e Imagen">Texto e Imagen</option>
-          <option value="Video">Video</option>
-        </select>
-      </div>
-  
-      <div class="form-group">
-        <label for="contenido">Contenido</label>
-        <textarea class="form-control" id="contenido" [(ngModel)]="anuncio.contenido" name="contenido" rows="3" required></textarea>
-      </div>
-  
-      <div class="form-group" *ngIf="anuncio.tipo === 'Texto e Imagen'">
-        <label for="imagen">URL de la Imagen</label>
-        <input type="text" class="form-control" id="imagen" [(ngModel)]="anuncio.imagen" name="imagen">
-      </div>
-  
-      <div class="form-group" *ngIf="anuncio.tipo === 'Video'">
-        <label for="video">URL del Video</label>
-        <input type="text" class="form-control" id="video" [(ngModel)]="anuncio.video" name="video">
-      </div>
-  
-      <div class="form-group">
-        <label for="fechaInicio">Fecha de Inicio</label>
-        <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="anuncio.fechaInicio" name="fechaInicio" required>
-      </div>
-  
-      <div class="form-group">
-        <label for="fechaFin">Fecha de Fin</label>
-        <input type="date" class="form-control" id="fechaFin" [(ngModel)]="anuncio.fechaFin" name="fechaFin" required>
-      </div>
-  
-      <div class="form-group">
-        <label for="duracion">Duración</label>
-        <select class="form-control" id="duracion" [(ngModel)]="duracion" name="duracion" required>
-          <option value="1 día">1 día</option>
-          <option value="3 días">3 días</option>
-          <option value="1 semana">1 semana</option>
-          <option value="2 semanas">2 semanas</option>
-        </select>
-      </div>
-  
-      <div class="form-group">
-        <label for="estado">Estado</label>
-        <select class="form-control" id="estado" [(ngModel)]="anuncio.estado" name="estado" required>
-          <option value="Activo">Activo</option>
-          <option value="Inactivo">Inactivo</option>
-        </select>
-      </div>
-  
-      <button type="submit" class="btn btn-primary">Crear Anuncio</button>
-    </form>
-  </div>
-  
+  <h2>Crear Anuncio</h2>
+  <form (ngSubmit)="crearAnuncio()">
+    <div class="form-group">
+      <label for="tipo">Tipo de Anuncio</label>
+      <select class="form-control" id="tipo" [(ngModel)]="anuncio.tipo" name="tipo" required>
+        <option value="Texto">Texto</option>
+        <option value="Texto e Imagen">Texto e Imagen</option>
+        <option value="Video">Video</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="contenido">Contenido</label>
+      <textarea class="form-control" id="contenido" [(ngModel)]="anuncio.contenido" name="contenido" rows="3" required></textarea>
+    </div>
+
+    <div class="form-group" *ngIf="anuncio.tipo === 'Texto e Imagen'">
+      <label for="imagen">Imagen</label>
+      <input type="file" class="form-control" id="imagen" (change)="onFileSelected($event)">
+    </div>
+
+    <div class="form-group" *ngIf="anuncio.tipo === 'Video'">
+      <label for="video">URL del Video</label>
+      <input type="text" class="form-control" id="video" [(ngModel)]="anuncio.video" name="video">
+    </div>
+
+    <div class="form-group">
+      <label for="fechaInicio">Fecha de Inicio</label>
+      <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="anuncio.fechaInicio" name="fechaInicio" required>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaFin">Fecha de Fin</label>
+      <input type="date" class="form-control" id="fechaFin" [(ngModel)]="anuncio.fechaFin" name="fechaFin" required>
+    </div>
+
+    <div class="form-group">
+      <label for="duracion">Duración</label>
+      <select class="form-control" id="duracion" [(ngModel)]="duracion" name="duracion" required>
+        <option value="1 día">1 día</option>
+        <option value="3 días">3 días</option>
+        <option value="1 semana">1 semana</option>
+        <option value="2 semanas">2 semanas</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="estado">Estado</label>
+      <select class="form-control" id="estado" [(ngModel)]="anuncio.estado" name="estado" required>
+        <option value="Activo">Activo</option>
+        <option value="Inactivo">Inactivo</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear Anuncio</button>
+  </form>
+</div>
