@@ -1,53 +1,52 @@
 <div class="container-fluid">
-    <div class="row">
-      <aside class="col-md-2 ad-left">
-        <div class="ad-container">
-          <!-- Espacio para Anuncio de Texto -->
-          <div class="ad-text mb-3" *ngIf="anunciosTexto.length > 0 && anunciosTexto[currentTextoIndex]">
-            <div class="alert alert-primary" role="alert">
-              {{ anunciosTexto[currentTextoIndex]?.contenido }}
-            </div>
-          </div>
-          <!-- Espacio para Anuncio de Imagen -->
-          <div class="ad-image mb-3" *ngIf="anunciosImagen.length > 0 && anunciosImagen[currentImagenIndex]">
-            <img [src]="anunciosImagen[currentImagenIndex]?.imagen" class="img-fluid" alt="Anuncio Imagen">
-            <p>{{ anunciosImagen[currentImagenIndex]?.contenido }}</p>
-          </div>
-          <!-- Espacio para Anuncio de Video -->
-          <div class="ad-video embed-responsive embed-responsive-16by9 mb-3" *ngIf="anunciosVideo.length > 0 && anunciosVideo[currentVideoIndex]">
-            <iframe class="embed-responsive-item" [src]="anunciosVideo[currentVideoIndex]?.video" allowfullscreen></iframe>
+  <div class="row">
+    <aside class="col-md-2 ad-left">
+      <div class="ad-container">
+        <!-- Espacio para Anuncio de Texto -->
+        <div class="ad-text mb-3" *ngIf="anunciosTexto.length > 0 && anunciosTexto[currentTextoIndex]">
+          <div class="alert alert-primary" role="alert">
+            {{ anunciosTexto[currentTextoIndex]?.contenido }}
           </div>
         </div>
-      </aside>
-  
-      <main class="col-md-8 offset-md-2">
-        <ng-content></ng-content>
-      </main>
-  
-      <aside class="col-md-2 ad-right">
-        <div class="ad-container">
-          <!-- Espacio para Anuncio de Texto -->
-          <div class="ad-text mb-3" *ngIf="anunciosTexto.length > 0 && anunciosTexto[currentTextoIndex]">
-            <div class="alert alert-warning" role="alert">
-              {{ anunciosTexto[currentTextoIndex]?.contenido }}
-            </div>
-          </div>
-          <!-- Espacio para Anuncio de Imagen -->
-          <div class="ad-image mb-3" *ngIf="anunciosImagen.length > 0 && anunciosImagen[currentImagenIndex]">
-            <img [src]="anunciosImagen[currentImagenIndex]?.imagen" class="img-fluid" alt="Anuncio Imagen">
-            <p>{{ anunciosImagen[currentImagenIndex]?.contenido }}</p>
-          </div>
-          <!-- Espacio para Anuncio de Video -->
-          <div class="ad-video embed-responsive embed-responsive-16by9 mb-3" *ngIf="anunciosVideo.length > 0 && anunciosVideo[currentVideoIndex]">
-            <iframe class="embed-responsive-item" [src]="anunciosVideo[currentVideoIndex]?.video" allowfullscreen></iframe>
+        <!-- Espacio para Anuncio de Imagen -->
+        <div class="ad-image mb-3" *ngIf="anunciosImagen.length > 0 && anunciosImagen[currentImagenIndex]">
+          <img [src]="anunciosImagen[currentImagenIndex]?.imagen" class="img-fluid" alt="Anuncio Imagen">
+          <p>{{ anunciosImagen[currentImagenIndex]?.contenido }}</p>
+        </div>
+        <!-- Espacio para Anuncio de Video -->
+        <div class="ad-video embed-responsive embed-responsive-16by9 mb-3" *ngIf="anunciosVideo.length > 0 && anunciosVideo[currentVideoIndex]">
+          <iframe class="embed-responsive-item" [src]="anunciosVideo[currentVideoIndex]?.video" allowfullscreen></iframe>
+        </div>
+      </div>
+    </aside>
+
+    <main class="col-md-8 offset-md-2">
+      <ng-content></ng-content>
+    </main>
+
+    <aside class="col-md-2 ad-right">
+      <div class="ad-container">
+        <!-- Espacio para Anuncio de Texto -->
+        <div class="ad-text mb-3" *ngIf="anunciosTexto.length > 0 && anunciosTexto[currentTextoIndex]">
+          <div class="alert alert-warning" role="alert">
+            {{ anunciosTexto[currentTextoIndex]?.contenido }}
           </div>
         </div>
-      </aside>
-    </div>
+        <!-- Espacio para Anuncio de Imagen -->
+        <div class="ad-image mb-3" *ngIf="anunciosImagen.length > 0 && anunciosImagen[currentImagenIndex]">
+          <img [src]="anunciosImagen[currentImagenIndex]?.imagen" class="img-fluid" alt="Anuncio Imagen">
+          <p>{{ anunciosImagen[currentImagenIndex]?.contenido }}</p>
+        </div>
+        <!-- Espacio para Anuncio de Video -->
+        <div class="ad-video embed-responsive embed-responsive-16by9 mb-3" *ngIf="anunciosVideo.length > 0 && anunciosVideo[currentVideoIndex]">
+          <iframe class="embed-responsive-item" [src]="anunciosVideo[currentVideoIndex]?.video" allowfullscreen></iframe>
+        </div>
+      </div>
+    </aside>
   </div>
-  
-  
-  <ng-template #cargando>
-    <p>Cargando anuncios...</p>
-  </ng-template>
-  
+</div>
+
+
+<ng-template #cargando>
+  <p>Cargando anuncios...</p>
+</ng-template>

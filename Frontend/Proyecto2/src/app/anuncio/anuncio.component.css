@@ -1,0 +1,27 @@
+.ad-left, .ad-right {
+    position: fixed;
+    top: 70px; /* Ajustar según la altura de tu header */
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    width: 15%; /* Reducir el ancho de los anuncios */
+  }
+  
+  .ad-left {
+    left: 0;
+  }
+  
+  .ad-right {
+    right: 0;
+  }
+  
+  main {
+    margin-top: 70px; /* Para alinear el contenido principal con el header */
+    margin-left: 17%; /* Ajustar el margen para el espacio reducido */
+    margin-right: 17%; /* Ajustar el margen para el espacio reducido */
+  }
+  
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+  
