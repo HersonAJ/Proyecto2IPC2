@@ -16,6 +16,7 @@ import java.util.Arrays;
  * @author herson
  */
 public class PerfilDB {
+
     public Usuario obtenerPerfilPorCorreo(String email) {
         Usuario usuario = null;
         try (Connection connection = DataSourceDB.getInstance().getConnection()) {
@@ -42,4 +43,39 @@ public class PerfilDB {
         }
         return usuario;
     }
+
+    // Método para actualizar el perfil del usuario (sin contraseña)
+    public boolean actualizarPerfilUsuario(Usuario usuario) {
+        String sql = "UPDATE Usuario SET nombre = ?, foto_perfil = ?, descripcion = ?, hobbies = ?, temas_interes = ? WHERE id_usuario = ?";
+        try (Connection connection = DataSourceDB.getInstance().getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, usuario.getNombre());
+            statement.setBytes(2, usuario.getFotoPerfil());
+            statement.setString(3, usuario.getDescripcion());
+            statement.setString(4, String.join(",", usuario.getHobbies()));
+            statement.setString(5, String.join(",", usuario.getTemasInteres()));
+            statement.setInt(6, usuario.getIdUsuario());
+
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Método para actualizar la contraseña del usuario
+    public boolean actualizarContraseñaUsuario(int idUsuario, String nuevaContraseña) {
+        String sql = "UPDATE Usuario SET contraseña = ? WHERE id_usuario = ?";
+        try (Connection connection = DataSourceDB.getInstance().getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, nuevaContraseña);
+            statement.setInt(2, idUsuario);
+
+            int rowsUpdated = statement.executeUpdate();
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

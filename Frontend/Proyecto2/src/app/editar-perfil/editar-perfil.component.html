@@ -1,0 +1,46 @@
+<div class="container my-4">
+    <h2>Editar Perfil</h2>
+    <form [formGroup]="perfilForm" (ngSubmit)="actualizarPerfil()" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" formControlName="nombre" required>
+        <div *ngIf="perfilForm.get('nombre')?.invalid && perfilForm.get('nombre')?.touched" class="text-danger">
+          El nombre es obligatorio.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo Electrónico:</label>
+        <input type="email" class="form-control" id="email" [formControl]="emailControl" required>
+        <div *ngIf="emailControl.invalid && emailControl.touched" class="text-danger">
+          El correo electrónico es obligatorio.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción:</label>
+        <textarea class="form-control" id="descripcion" formControlName="descripcion"></textarea>
+        <div *ngIf="perfilForm.get('descripcion')?.invalid && perfilForm.get('descripcion')?.touched" class="text-danger">
+          La descripción es obligatoria.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="hobbies" class="form-label">Hobbies:</label>
+        <input type="text" class="form-control" id="hobbies" formControlName="hobbies">
+        <div *ngIf="perfilForm.get('hobbies')?.invalid && perfilForm.get('hobbies')?.touched" class="text-danger">
+          Los hobbies son obligatorios.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="temasInteres" class="form-label">Temas de Interés:</label>
+        <input type="text" class="form-control" id="temasInteres" formControlName="temasInteres">
+        <div *ngIf="perfilForm.get('temasInteres')?.invalid && perfilForm.get('temasInteres')?.touched" class="text-danger">
+          Los temas de interés son obligatorios.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="fotoPerfil" class="form-label">Foto de Perfil:</label>
+        <input type="file" class="form-control" id="fotoPerfil" (change)="onFileChange($event)" accept=".jpg, .png">
+      </div>
+      <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+    </form>
+  </div>
+  
