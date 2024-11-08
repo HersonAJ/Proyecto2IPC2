@@ -41,8 +41,30 @@ public class ComentarioDB {
         return comentarios;
     }
 
+    // Método para verificar si la revista permite comentarios
+    public boolean permiteComentarios(int idRevista) {
+        String query = "SELECT permite_comentarios FROM Revista WHERE id_revista = ?";
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, idRevista);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getBoolean("permite_comentarios");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     // Método para agregar un nuevo comentario
     public boolean agregarComentario(Comentario comentario) {
+        // Verificar si la revista permite comentarios
+        if (!permiteComentarios(comentario.getIdRevista())) {
+            return false; // La revista no permite comentarios
+        }
+
         String query = "INSERT INTO Comentario (id_usuario, id_revista, contenido, fecha_creacion) VALUES (?, ?, ?, ?)";
 
         try (Connection connection = DataSourceDB.getInstance().getConnection();

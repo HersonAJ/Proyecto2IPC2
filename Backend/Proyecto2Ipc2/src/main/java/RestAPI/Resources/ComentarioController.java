@@ -43,7 +43,12 @@ public class ComentarioController {
         if (creado) {
             return Response.status(Response.Status.CREATED).entity(comentario).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Error al crear el comentario").build();
+            // Verificar si el problema es que la revista no permite comentarios
+            if (!comentarioDB.permiteComentarios(comentario.getIdRevista())) {
+                return Response.status(Response.Status.FORBIDDEN).entity("La revista no permite comentarios.").build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Error al crear el comentario").build();
+            }
         }
     }
 }

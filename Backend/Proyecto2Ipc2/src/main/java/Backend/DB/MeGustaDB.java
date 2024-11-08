@@ -18,7 +18,6 @@ import java.util.List;
  */
 public class MeGustaDB {
 
-    
     // Método para obtener "Me Gusta" por revista
     public List<MeGusta> obtenerMeGustaPorRevista(int idRevista) {
         List<MeGusta> meGustas = new ArrayList<>();
@@ -44,8 +43,30 @@ public class MeGustaDB {
         return meGustas;
     }
 
+    // Método para verificar si la revista permite "Me Gusta"
+    public boolean permiteMeGusta(int idRevista) {
+        String query = "SELECT permite_megusta FROM Revista WHERE id_revista = ?";
+        try (Connection connection = DataSourceDB.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, idRevista);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getBoolean("permite_megusta");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     // Método para agregar un "Me Gusta"
     public boolean agregarMeGusta(MeGusta meGusta) {
+        // Verificar si la revista permite "Me Gusta"
+        if (!permiteMeGusta(meGusta.getIdRevista())) {
+            return false; // La revista no permite "Me Gusta"
+        }
+
         String query = "INSERT INTO MeGusta (id_usuario, id_revista, fecha_megusta) VALUES (?, ?, ?)";
 
         try (Connection connection = DataSourceDB.getInstance().getConnection();

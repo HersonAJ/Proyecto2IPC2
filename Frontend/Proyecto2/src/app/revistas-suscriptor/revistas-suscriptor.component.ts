@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RevistaSuscriptorService } from '../Services/revista-suscriptor.service';
 import { AuthService } from '../Services/auth.service';
 import { RouterModule } from '@angular/router';
-import { RevistaInfoService } from '../Services/revista-info.service'; 
+import { RevistaInfoService } from '../Services/revista-info.service';
 
 interface Revista {
   idRevista: number;
@@ -13,7 +13,7 @@ interface Revista {
   descripcion: string;
   categoria: string;
   fechaCreacion: Date;
-  meGustaCount?: number; 
+  meGustaCount?: number; // Agregar propiedad opcional para Me Gusta
 }
 
 @Component({
@@ -22,7 +22,7 @@ interface Revista {
   imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
   templateUrl: './revistas-suscriptor.component.html',
   styleUrls: ['./revistas-suscriptor.component.css'],
-  providers: [RevistaInfoService] 
+  providers: [RevistaInfoService] // Asegurarse de que el servicio esté disponible
 })
 export class RevistasSuscriptorComponent implements OnInit {
   revistas: Revista[] = [];
@@ -76,31 +76,35 @@ export class RevistasSuscriptorComponent implements OnInit {
     console.log(`ID de revista: ${this.idRevistaSeleccionada}`);
 
     if (this.idUsuario !== null && this.fechaSuscripcion) {
-      this.revistaService.suscribirseRevista(
-        this.idUsuario,
-        this.idRevistaSeleccionada!,
-        this.fechaSuscripcion
-      ).subscribe(
-        response => {
-          alert(response.message);
-          this.actualizarRevistas();
-          this.mostrarCampoFecha = false; // Oculta el campo de fecha
-        },
-        error => {
-          if (error.status === 409) {
-            // Manejo específico para el conflicto de suscripción existente
-            alert('Ya está suscrito a esta revista.');
-          } else {
-            alert('Error al realizar la suscripción.');
-            console.error('Error al suscribirse a la revista', error);
-          }
-          this.mostrarCampoFecha = false;
-        }
-      );
+        this.revistaService.suscribirseRevista(
+            this.idUsuario,
+            this.idRevistaSeleccionada!,
+            this.fechaSuscripcion
+        ).subscribe(
+            response => {
+                alert(response.message);
+                this.actualizarRevistas();
+                this.mostrarCampoFecha = false; // Oculta el campo de fecha
+            },
+            error => {
+                if (error.status === 409) {
+                    // Manejo específico para el conflicto de suscripción existente
+                    alert('Ya está suscrito a esta revista.');
+                } else if (error.status === 403) {
+                    // Manejo específico para la revista que no permite suscripciones
+                    alert('La revista no permite suscripciones.');
+                } else {
+                    alert('Error al realizar la suscripción.');
+                    console.error('Error al suscribirse a la revista', error);
+                }
+                this.mostrarCampoFecha = false;
+            }
+        );
     } else {
-      alert('Por favor, proporciona una fecha de suscripción válida.');
+        alert('Por favor, proporciona una fecha de suscripción válida.');
     }
-  }
+}
+
 
   actualizarRevistas(): void {
     this.revistaService.getTodasLasRevistas().subscribe(
@@ -120,7 +124,6 @@ export class RevistasSuscriptorComponent implements OnInit {
       error => console.error('Error al actualizar las revistas', error)
     );
   }
-
 
 
   buscarPorCategoria(): void {
@@ -175,3 +178,4 @@ export class RevistasSuscriptorComponent implements OnInit {
     );
   }
 }
+

@@ -42,7 +42,12 @@ public class MeGustaController {
         if (creado) {
             return Response.status(Response.Status.CREATED).entity(meGusta).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Error al agregar Me Gusta").build();
+            // Verificar si el problema es que la revista no permite "Me Gusta"
+            if (!meGustaDB.permiteMeGusta(meGusta.getIdRevista())) {
+                return Response.status(Response.Status.FORBIDDEN).entity("La revista no permite 'Me Gusta'.").build();
+            } else {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Error al agregar Me Gusta").build();
+            }
         }
     }
 }

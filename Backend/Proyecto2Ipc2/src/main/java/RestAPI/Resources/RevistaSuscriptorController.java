@@ -22,7 +22,6 @@ import java.util.List;
  *
  * @author herson
  */
-
 @Path("/revistas-suscriptor")
 public class RevistaSuscriptorController {
 
@@ -63,31 +62,32 @@ public class RevistaSuscriptorController {
         }
     }
 
-    
     @POST
     @Path("/{idRevista}/suscribirse")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response suscribirseRevista(@PathParam("idRevista") int idRevista, Suscripcion request) {
-        // Log para verificar parámetros de entrada
         System.out.println("Llamada a suscribirseRevista con idRevista: " + idRevista + " y idUsuario: " + request.getIdUsuario());
 
-       
         RevistaSuscriptorDB revistaSuscriptorDB = new RevistaSuscriptorDB();
 
-        // Llamada a la base de datos para verificar si el usuario ya está suscrito
+        // Verificar si la revista permite suscripciones antes de intentar suscribirse
+        if (!revistaSuscriptorDB.permiteSuscripcion(idRevista)) {
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity("{\"message\":\"La revista no permite suscripciones.\"}")
+                    .build();
+        }
+
         boolean isSubscribed = revistaSuscriptorDB.suscribirseRevista(request.getIdUsuario(), idRevista, request.getFechaSuscripcion());
 
         if (isSubscribed) {
-            // Respuesta exitosa
             return Response.status(Response.Status.OK)
-                           .entity("{\"message\":\"Suscripción realizada exitosamente.\"}")
-                           .build();
+                    .entity("{\"message\":\"Suscripción realizada exitosamente.\"}")
+                    .build();
         } else {
-            // Respuesta en caso de conflicto: ya suscrito
             return Response.status(Response.Status.CONFLICT)
-                           .entity("{\"message\":\"El usuario ya está suscrito a esta revista.\"}")
-                           .build();
+                    .entity("{\"message\":\"El usuario ya está suscrito a esta revista.\"}")
+                    .build();
         }
     }
 
@@ -103,6 +103,5 @@ public class RevistaSuscriptorController {
             return Response.status(Response.Status.OK).entity("{\"message\":\"No se encontraron revistas suscritas para este usuario.\"}").build();
         }
     }
-
 
 }

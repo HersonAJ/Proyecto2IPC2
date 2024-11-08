@@ -71,18 +71,27 @@ export class RevistaInfoComponent implements OnInit {
         contenido: this.nuevoComentario,
         fechaCreacion: this.fechaComentario  // Utilizar la fecha manual
       };
-
-      this.revistaInfo.agregarComentario(comentario).subscribe((response) => {
-        this.comentarios.push(response);
-        this.nuevoComentario = '';  // Limpiar el campo de texto
-        this.fechaComentario = '';  // Limpiar el campo de fecha
-      }, (error) => {
-        console.error('Error al agregar comentario:', error);
-      });
+  
+      this.revistaInfo.agregarComentario(comentario).subscribe(
+        (response) => {
+          this.comentarios.push(response);
+          this.nuevoComentario = '';  // Limpiar el campo de texto
+          this.fechaComentario = '';  // Limpiar el campo de fecha
+        },
+        (error) => {
+          if (error.status === 403) {
+            alert('La revista no permite comentarios.');
+          } else {
+            alert('Error al agregar comentario.');
+            console.error('Error al agregar comentario', error);
+          }
+        }
+      );
     } else {
       console.warn('Faltan datos para agregar el comentario'); // Mensaje de advertencia si faltan datos
     }
   }
+  
 
   darMeGusta(): void {
     const idUsuario = this.authService.getIdUsuario(); // Obtener idUsuario
@@ -92,16 +101,25 @@ export class RevistaInfoComponent implements OnInit {
         idRevista: this.idRevista,
         fechaMeGusta: new Date().toISOString().split('T')[0]  // Formato de fecha YYYY-MM-DD
       };
-
-      this.revistaInfo.agregarMeGusta(meGusta).subscribe((response) => {
-        this.meGustas.push(response);
-      }, (error) => {
-        console.error('Error al agregar Me Gusta:', error);
-      });
+  
+      this.revistaInfo.agregarMeGusta(meGusta).subscribe(
+        (response) => {
+          this.meGustas.push(response);
+        },
+        (error) => {
+          if (error.status === 403) {
+            alert('La revista no permite "Me Gusta".');
+          } else {
+            alert('Error al agregar "Me Gusta".');
+            console.error('Error al agregar "Me Gusta"', error);
+          }
+        }
+      );
     } else {
-      console.warn('Usuario no autenticado'); // Mensaje de advertencia si el usuario no está autenticado
+      alert('Usuario no autenticado.');
     }
   }
+  
 
   verPdf(idEdicion: number): void {
     this.router.navigate(['ver-archivo', this.idRevista, idEdicion]);

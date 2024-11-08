@@ -1,44 +1,44 @@
 <div class="container my-4">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Buscar Revistas</h2>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Buscar por categoría" [(ngModel)]="categoria">
-          <button class="btn btn-primary" (click)="buscarPorCategoria()">Buscar</button>
-        </div>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Buscar por tag" [(ngModel)]="tag">
-          <button class="btn btn-primary" (click)="buscarPorTag()">Buscar</button>
-        </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Buscar Revistas</h2>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Buscar por categoría" [(ngModel)]="categoria">
+        <button class="btn btn-primary" (click)="buscarPorCategoria()">Buscar</button>
       </div>
-    </div>
-  
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Revistas Disponibles</h2>
-        <ul class="list-group">
-          <li *ngFor="let revista of revistas" class="list-group-item">
-            <h5 class="mb-1">{{ revista.titulo }}</h5>
-            <p class="descripcion mb-1">{{ revista.descripcion }}</p>
-            <small><strong>Categoría:</strong> {{ revista.categoria }}</small><br>
-            <small><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date }}</small><br>
-            <small><strong>Me Gusta:</strong> {{ revista.meGustaCount }} Me Gusta(s)</small><br> <!-- Mostrar la cantidad de Me Gusta -->
-            <button class="btn btn-success mt-2" (click)="suscribirse(revista.idRevista)">Suscribirse</button>
-  
-          </li>
-        </ul>
-      </div>
-    </div>
-  
-    <!-- Campo para seleccionar la fecha de suscripción y confirmar -->
-    <div *ngIf="mostrarCampoFecha" class="row mt-4">
-      <div class="col-md-12">
-        <h3>Seleccione la fecha de suscripción</h3>
-        <div class="input-group">
-          <input type="date" class="form-control" [(ngModel)]="fechaSuscripcion" />
-          <button class="btn btn-primary" (click)="confirmarSuscripcion()">Confirmar suscripción</button>
-          <button class="btn btn-secondary" (click)="mostrarCampoFecha = false">Cancelar</button>
-        </div>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Buscar por tag" [(ngModel)]="tag">
+        <button class="btn btn-primary" (click)="buscarPorTag()">Buscar</button>
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Revistas Disponibles</h2>
+      <ul class="list-group">
+        <li *ngFor="let revista of revistas" class="list-group-item">
+          <h5 class="mb-1">{{ revista.titulo }}</h5>
+          <p class="descripcion mb-1">{{ revista.descripcion }}</p>
+          <small><strong>Categoría:</strong> {{ revista.categoria }}</small><br>
+          <small><strong>Fecha de Creación:</strong> {{ revista.fechaCreacion | date }}</small><br>
+          <small><strong>Me Gusta:</strong> {{ revista.meGustaCount }} Me Gusta(s)</small><br> <!-- Mostrar la cantidad de Me Gusta -->
+          <button class="btn btn-success mt-2" (click)="suscribirse(revista.idRevista)">Suscribirse</button>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Campo para seleccionar la fecha de suscripción y confirmar -->
+  <div *ngIf="mostrarCampoFecha" class="row mt-4">
+    <div class="col-md-12">
+      <h3>Seleccione la fecha de suscripción</h3>
+      <div class="input-group">
+        <input type="date" class="form-control" [(ngModel)]="fechaSuscripcion" />
+        <button class="btn btn-primary" (click)="confirmarSuscripcion()">Confirmar suscripción</button>
+        <button class="btn btn-secondary" (click)="mostrarCampoFecha = false">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
