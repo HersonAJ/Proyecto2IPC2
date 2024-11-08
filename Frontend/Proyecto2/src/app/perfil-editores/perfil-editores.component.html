@@ -1,0 +1,30 @@
+<div class="container my-4">
+    <h2>Perfiles de Editores</h2>
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="!errorMessage" class="row">
+      <div class="col-md-12" *ngFor="let editor of editores">
+        <div class="card mb-4">
+          <div class="row g-0">
+            <!-- Columna de la foto y el nombre -->
+            <div class="col-md-4 text-center">
+              <div class="card-body">
+                <img *ngIf="editor.fotoPerfilBase64" [src]="editor.fotoPerfilBase64" alt="Foto de Perfil" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                <h5 class="card-title">{{ editor.nombre }}</h5>
+                <p class="card-text"><strong>Email:</strong> {{ editor.email }}</p>
+              </div>
+            </div>
+            <!-- Columna de la descripción, hobbies, temas de interés y saldo -->
+            <div class="col-md-8">
+              <div class="card-body">
+                <p><strong>Descripción:</strong> {{ editor.descripcion }}</p>
+                <p><strong>Hobbies:</strong> {{ editor.hobbies.join(', ') }}</p>
+                <p><strong>Temas de Interés:</strong> {{ editor.temasInteres.join(', ') }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

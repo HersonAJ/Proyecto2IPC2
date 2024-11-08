@@ -29,6 +29,7 @@ import { MisAnunciosComponent } from './mis-anuncios/mis-anuncios.component';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 //reportes del editor
 import { ReportesEditorComponent } from './reportes-editor/reportes-editor.component';
+import { PerfilEditoresComponent } from './perfil-editores/perfil-editores.component';
 
 
 
@@ -67,6 +68,7 @@ export const routes: Routes = [
   { path: 'revistas', component: RevistasSuscriptorComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },
   { path: 'mis-suscripciones', component: MisSuscripcionesComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },
   { path: 'revista-info/:idRevista', component: RevistaInfoComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },
+  { path: 'perfil-editores', component: PerfilEditoresComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Suscriptor'] } },
 
   //comprador de anuncios
   { path: 'comprar-anuncio', component: ComprarAnuncioComponent, canActivate: [authGuardGuard], data: { expectedRoles: ['Comprador_Anuncios'] } },
